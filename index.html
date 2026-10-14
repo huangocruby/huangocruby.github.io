@@ -332,6 +332,10 @@
     .ob-thoughts h4 { font-family: var(--sans); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: #7a6f60; margin: 0 0 8px; font-weight: 600; }
     .ob-thoughts p { font-size: 17px; margin: 0 0 12px; }
     .ob-empty { font-style: italic; color: #8a8070; }
+    .ob-thoughts .fav {
+      font-family: var(--display); font-style: italic; font-size: 19px; line-height: 1.5;
+      color: var(--page-ink); border-left: 3px solid #4a7f3a; padding-left: 14px; margin: 4px 0 18px;
+    }
     @media (max-width: 700px) {
       .ob {
         --pw: min(calc(100vw - 32px), 420px);
@@ -528,6 +532,7 @@
        color/ink: màu bìa và màu chữ trên bìa
        motif:    hình vẽ nhỏ trên bìa
        cover:    để trống "" thì dùng bìa vẽ; điền đường dẫn ảnh (vd "images/nha-gia-kim.jpg") để dùng bìa thật
+       quote:    (không bắt buộc) câu tâm đắc nhất, hiện nổi bật ở đầu phần cảm nghĩ
        thoughts: cảm nghĩ của Ruby, mỗi đoạn là một chuỗi trong [ ]                                   */
     const BOOKS = [
       { shelf: "ngoai", title: "Hai số phận", author: "Jeffrey Archer", color: "#6e2f2f", ink: "#f2dfc0", motif: "two", cover: "images/bia/hai-so-phan.jpg",
@@ -537,7 +542,14 @@
       { shelf: "ngoai", title: "Không gia đình", author: "Hector Malot", color: "#3f6b5a", ink: "#f3ead2", motif: "road", cover: "images/bia/khong-gia-dinh.jpg",
         blurb: "Cậu bé Rémi theo gánh hát rong của cụ Vitalis đi khắp nước Pháp, lớn lên giữa gian khó và đi tìm một mái nhà.", thoughts: [] },
       { shelf: "ngoai", title: "Nhà giả kim", author: "Paulo Coelho", color: "#c9913e", ink: "#3a2614", motif: "desert", cover: "images/bia/nha-gia-kim.jpg",
-        blurb: "Hành trình của chàng chăn cừu Santiago đi tìm kho báu, và bài học về việc lắng nghe trái tim mình.", thoughts: [] },
+        blurb: "Hành trình của chàng chăn cừu Santiago đi tìm kho báu, và bài học về việc lắng nghe trái tim mình.",
+        quote: "Khi bạn khao khát một điều gì đó, cả vũ trụ sẽ hợp lực giúp bạn đạt được điều đó.",
+        thoughts: [
+          "Câu chuyện của Santiago, chàng chăn cừu rời bỏ đàn cừu quen thuộc để đi tìm kho báu ở tận Kim Tự Tháp, giản dị như một truyện cổ tích. Nhưng càng đọc, mình càng thấy đó là hành trình của bất kỳ ai dám đi theo ước mơ của mình.",
+          "Câu mình nhớ nhất là câu nói về cả vũ trụ hợp lực. Mình hiểu nó không phải là phép màu tự tìm đến. Khi mình thật lòng mong muốn một điều gì và bắt đầu bước đi, mình sẽ nhận ra những cơ hội, những con người, những dấu hiệu mà trước đó mình vẫn bỏ qua. Vũ trụ giúp người đang đi, chứ không giúp người chỉ đứng nhìn.",
+          "Santiago cũng không đến được kho báu một cách dễ dàng. Cậu bị lừa mất hết tiền, phải làm thuê cho người bán pha lê, rồi băng qua sa mạc giữa thời chiến. Chính những lần vấp ngã ấy dạy cậu cách lắng nghe trái tim mình. Và kho báu thật sự, cuối cùng, lại nằm ngay nơi cậu đã bắt đầu.",
+          "Gấp sách lại, mình tự nhắc bản thân: đừng sợ bắt đầu, hãy tin vào con đường mình đã chọn, và trân trọng cả những gì mình học được trên đường đi."
+        ] },
       { shelf: "ngoai", title: "Người đàn ông mang tên Ove", author: "Fredrik Backman", color: "#4f6d8f", ink: "#f6efe0", motif: "house", cover: "images/bia/nguoi-dan-ong-mang-ten-ove.jpg",
         blurb: "Một ông lão khó tính, cô đơn, và những người hàng xóm mới vô tình kéo ông trở lại với cuộc sống.", thoughts: [] },
       { shelf: "ngoai", title: "Kiêu hãnh và định kiến", author: "Jane Austen", color: "#e7c9c6", ink: "#6b2f3a", motif: "rose", cover: "images/bia/kieu-hanh-va-dinh-kien.jpg",
@@ -610,7 +622,7 @@
         : `<p class="ob-empty">Cảm nghĩ đang được viết…</p>`;
       obPage.innerHTML = `<p class="ob-shelf">${shelfName(b.shelf)}</p><h3>${esc(b.title)}</h3>` +
         `<p class="ob-author">${esc(b.author)}</p><p class="ob-blurb">${esc(b.blurb)}</p>` +
-        `<div class="ob-thoughts"><h4>Cảm nghĩ của mình</h4>${thoughts}</div>`;
+        `<div class="ob-thoughts"><h4>Cảm nghĩ của mình</h4>${b.quote ? `<p class="fav">“${esc(b.quote)}”</p>` : ""}${thoughts}</div>`;
       obPage.scrollTop = 0;
       ob.classList.remove("open");
       reader.showModal();
