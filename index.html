@@ -7,8 +7,9 @@
   <meta name="description" content="Nơi Ruby viết về những cuốn sách, những điều tích cực và những câu chuyện nhỏ.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
   <style>
+    /* Bố cục: tranh đồng quê ở đầu trang, nội dung một cột như trang sách, kệ sách gỗ ở Góc sách. */
     /* ===== BẢNG MÀU (ban ngày) ===== */
     :root {
       --paper: #f7f4ea;
@@ -20,26 +21,25 @@
       --accent-soft: #e4efd6;
       --line: #e1e4d3;
       --nav-bg: rgba(247, 244, 234, .88);
-      --title: #24425a;
-      --title-glow: rgba(255, 255, 255, .75);
+      --title: #ffffff;
+      --title-glow: rgba(12, 28, 44, .55);
+      --page: #fbf6ea;
+      --page-ink: #2f2a22;
+      --plank: #b8875a;
+      --plank-dark: #8a6240;
+      --backdrop: rgba(24, 36, 24, .55);
 
-      /* màu cảnh vẽ */
-      --sky1: #6fb6e3; --sky2: #b9def0; --sky3: #fbefd5;
-      --sun: #fff8dc; --glow: #fff0bf;
-      --cloud: #ffffff; --cloud-shade: #d6e4f1;
-      --mtn: #a9c9d8; --hill-far: #a7cf8e; --hill-mid: #86bd68;
-      --field1: #cddb76; --field2: #9fcb6b; --field3: #b7d580;
-      --grass: #6fae4f; --grass-front: #5b9a40; --grass-dark: #46803a;
-      --tree: #4f8f3c; --tree-dark: #3a7030; --tree-light: #7cb85a; --trunk: #6b4a32;
-      --path: #ead9ae; --roof: #c0533a; --wall: #f5ecd9; --window: #7a9bb0;
-      --bird: #4b6276; --star-op: 0;
+      /* màu dải đồi ở chân trang */
+      --forest-far: #7fae9a; --grass: #6cad4c; --grass-front: #4f9440;
+      --tree: #3f7f3a; --tree-light: #6aaa4e; --trunk: #5e4330;
 
       --serif: "Lora", Georgia, serif;
+      --display: "Playfair Display", "Lora", Georgia, serif;
       --sans: "Be Vietnam Pro", system-ui, sans-serif;
     }
-    /* ===== BẢNG MÀU (ban đêm – khi máy để chế độ tối) ===== */
+    /* ===== BẢNG MÀU (khi máy để chế độ tối) ===== */
     @media (prefers-color-scheme: dark) {
-      :root {
+      :root:not([data-theme="light"]) {
         --paper: #131a22;
         --card: #1b2430;
         --ink: #e9e4d8;
@@ -49,19 +49,38 @@
         --accent-soft: #24352a;
         --line: #2a3542;
         --nav-bg: rgba(19, 26, 34, .88);
-        --title: #f6f0de;
-        --title-glow: rgba(10, 18, 40, .8);
-
-        --sky1: #0e1a35; --sky2: #23386a; --sky3: #5d6192;
-        --sun: #f4eecf; --glow: #b9b8e0;
-        --cloud: #8a96b6; --cloud-shade: #5c6889;
-        --mtn: #34466b; --hill-far: #2d4944; --hill-mid: #2a4935;
-        --field1: #3d5b3a; --field2: #335136; --field3: #395737;
-        --grass: #25402c; --grass-front: #1e3525; --grass-dark: #172a1d;
-        --tree: #22402b; --tree-dark: #172e1f; --tree-light: #2f5538; --trunk: #3a2a20;
-        --path: #57574f; --roof: #6e3a30; --wall: #8a8576; --window: #ffd27a;
-        --bird: transparent; --star-op: 1;
+        --title: #fff6e6;
+        --title-glow: rgba(5, 12, 24, .7);
+        --page: #ece3cf;
+        --page-ink: #2b261e;
+        --plank: #6b4a33;
+        --plank-dark: #4a3324;
+        --backdrop: rgba(5, 8, 14, .7);
+        --forest-far: #4f5f73; --grass: #3d6a3a; --grass-front: #2f5530;
+        --tree: #2f5a35; --tree-light: #47774a; --trunk: #3e2c22;
+        color-scheme: dark;
       }
+    }
+    :root[data-theme="dark"] {
+      --paper: #131a22;
+        --card: #1b2430;
+        --ink: #e9e4d8;
+        --muted: #a2a9b2;
+        --accent: #9ccc7f;
+        --accent2: #e3a07c;
+        --accent-soft: #24352a;
+        --line: #2a3542;
+        --nav-bg: rgba(19, 26, 34, .88);
+        --title: #fff6e6;
+        --title-glow: rgba(5, 12, 24, .7);
+        --page: #ece3cf;
+        --page-ink: #2b261e;
+        --plank: #6b4a33;
+        --plank-dark: #4a3324;
+        --backdrop: rgba(5, 8, 14, .7);
+        --forest-far: #4f5f73; --grass: #3d6a3a; --grass-front: #2f5530;
+        --tree: #2f5a35; --tree-light: #47774a; --trunk: #3e2c22;
+        color-scheme: dark;
     }
 
     * { box-sizing: border-box; }
@@ -73,54 +92,59 @@
       font-family: var(--serif);
       font-size: 18px;
       line-height: 1.75;
+      overflow-x: clip;
     }
     a { color: var(--accent); }
     .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
 
-    /* ---------- Đầu trang: cảnh vẽ ---------- */
+    /* ---------- Đầu trang: hình nền đồng hoa ---------- */
     .hero {
       position: relative;
-      height: clamp(560px, 44.45vw, 760px);
+      height: clamp(520px, 52vw, 820px);
       overflow: hidden;
       text-align: center;
+      background: #7fb2d9;
     }
-    .scene { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .bg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: 50% 58%;
+      animation: breathe 24s ease-in-out infinite alternate;
+    }
+    @keyframes breathe { from { transform: scale(1); } to { transform: scale(1.06); } }
+    .hero::before {
+      content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: linear-gradient(to bottom, rgba(10, 40, 80, .38), rgba(10, 40, 80, .1) 38%, transparent 55%);
+    }
     .hero::after {
-      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 48px;
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 40px; z-index: 1;
       background: linear-gradient(to bottom, transparent, var(--paper));
     }
-    .hero-text { position: relative; z-index: 2; max-width: 640px; margin: 0 auto; padding: 64px 16px 0; }
+    .hero-text { position: relative; z-index: 2; max-width: 640px; margin: 0 auto; padding: 56px 16px 0; }
     .hero .kicker {
       font-family: var(--sans); font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--title); opacity: .8; margin: 0;
+      color: var(--title); opacity: .9; margin: 0;
+      text-shadow: 0 1px 8px var(--title-glow);
     }
     .hero h1 {
-      font-size: clamp(36px, 7vw, 56px); margin: 6px 0 8px; font-weight: 700; letter-spacing: -0.5px;
-      color: var(--title); line-height: 1.15;
-      text-shadow: 0 0 18px var(--title-glow), 0 0 4px var(--title-glow);
+      font-size: clamp(36px, 7vw, 58px); margin: 6px 0 8px; font-weight: 700; letter-spacing: -0.5px;
+      color: var(--title); line-height: 1.15; text-wrap: balance;
+      text-shadow: 0 2px 18px var(--title-glow), 0 1px 3px var(--title-glow);
     }
     .hero p.tagline {
       color: var(--title); font-style: italic; margin: 0 auto; max-width: 500px;
-      text-shadow: 0 0 14px var(--title-glow), 0 0 3px var(--title-glow);
+      text-shadow: 0 1px 12px var(--title-glow), 0 1px 2px var(--title-glow);
     }
     @media (max-width: 600px) {
-      .hero-text { padding-top: 52px; }
+      .hero-text { padding-top: 44px; }
       .hero p.tagline { font-size: 16px; line-height: 1.6; }
     }
-
-    /* các chi tiết trong tranh */
-    .sky1 { stop-color: var(--sky1); } .sky2 { stop-color: var(--sky2); } .sky3 { stop-color: var(--sky3); }
-    .glow1 { stop-color: var(--glow); stop-opacity: .9; } .glow2 { stop-color: var(--glow); stop-opacity: 0; }
-    .stars { opacity: var(--star-op); fill: #fff; }
-    .drift { animation: drift 70s ease-in-out infinite alternate; }
-    .drift.d2 { animation-duration: 95s; animation-delay: -30s; }
-    .drift.d3 { animation-duration: 55s; animation-delay: -12s; }
-    @keyframes drift { from { transform: translateX(-40px); } to { transform: translateX(50px); } }
-    @media (prefers-reduced-motion: reduce) { .drift { animation: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .bg { animation: none; }
+    }
 
     /* ---------- Thanh menu ---------- */
     nav {
-      position: sticky; top: 0; z-index: 10;
+      position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
       background: var(--nav-bg);
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--line);
@@ -139,8 +163,15 @@
     /* ---------- Các phần ---------- */
     section { padding: 64px 0 8px; scroll-margin-top: 48px; }
     .eyebrow { font-family: var(--sans); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin: 0; }
-    .eyebrow::before { content: "❦ "; letter-spacing: 0; }
-    h2 { font-size: 32px; margin: 4px 0 8px; }
+    /* cỏ 4 lá */
+    :root { --clover: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg transform='rotate%2845 12 12%29'%3E%3Ccircle cx='10' cy='6' r='2.9'/%3E%3Ccircle cx='14' cy='6' r='2.9'/%3E%3Cpath d='M7.3 7.2H16.7L12 12Z'/%3E%3C/g%3E%3Cg transform='rotate%28135 12 12%29'%3E%3Ccircle cx='10' cy='6' r='2.9'/%3E%3Ccircle cx='14' cy='6' r='2.9'/%3E%3Cpath d='M7.3 7.2H16.7L12 12Z'/%3E%3C/g%3E%3Cg transform='rotate%28225 12 12%29'%3E%3Ccircle cx='10' cy='6' r='2.9'/%3E%3Ccircle cx='14' cy='6' r='2.9'/%3E%3Cpath d='M7.3 7.2H16.7L12 12Z'/%3E%3C/g%3E%3Cg transform='rotate%28315 12 12%29'%3E%3Ccircle cx='10' cy='6' r='2.9'/%3E%3Ccircle cx='14' cy='6' r='2.9'/%3E%3Cpath d='M7.3 7.2H16.7L12 12Z'/%3E%3C/g%3E%3Cpath d='M12 12Q12.6 17 15.5 22' stroke='black' stroke-width='1.7' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); }
+    .eyebrow { display: flex; align-items: center; gap: 8px; }
+    .eyebrow::before, .timeline li::before {
+      content: ""; flex: none; width: 18px; height: 18px;
+      background: var(--accent);
+      -webkit-mask: var(--clover) center / contain no-repeat; mask: var(--clover) center / contain no-repeat;
+    }
+    h2 { font-size: 32px; margin: 4px 0 8px; text-wrap: balance; }
     .lead { color: var(--muted); margin: 0 0 28px; }
     h3 { font-size: 22px; margin: 0 0 4px; line-height: 1.35; }
     .meta { font-family: var(--sans); font-size: 14px; color: var(--muted); margin: 0 0 12px; }
@@ -165,22 +196,156 @@
     details[open] summary::after { content: " ↑"; }
     details[open] summary { margin-bottom: 8px; }
 
-    /* Góc sách */
-    .books { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-    @media (max-width: 640px) { .books { grid-template-columns: 1fr; } }
-    .tag {
-      display: inline-block; font-family: var(--sans); font-size: 12px; font-weight: 600;
-      padding: 3px 10px; border-radius: 999px; margin-bottom: 12px;
-      background: var(--accent-soft); color: var(--accent);
+    /* ---------- Góc sách: kệ sách ---------- */
+    .shelf-hint { font-family: var(--sans); font-size: 14px; color: var(--muted); margin: -16px 0 8px; }
+    .shelf-title { font-size: 24px; margin: 40px 0 8px; }
+    .shelf-title:first-child { margin-top: 16px; }
+    .shelf {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+      column-gap: 20px;
     }
-    .tag.reading { background: transparent; border: 1px solid var(--accent2); color: var(--accent2); }
-    .fav { border-left: 3px solid var(--accent); padding-left: 14px; font-style: italic; color: var(--muted); }
-    .shelf-title { font-size: 24px; margin: 40px 0 16px; }
-    .shelf-title:first-of-type { margin-top: 8px; }
-    .book { border-left: 6px solid var(--spine, var(--accent)); padding: 20px 22px; }
-    .book h3 { font-size: 20px; }
-    .book .meta { margin-bottom: 8px; }
-    .book .blurb { margin: 0; font-size: 16px; line-height: 1.65; }
+    .slot {
+      position: relative; height: 214px; padding-bottom: 16px;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    .slot::after {
+      content: ""; position: absolute; left: -10px; right: -10px; bottom: 0; height: 16px;
+      background: linear-gradient(var(--plank), var(--plank-dark));
+      box-shadow: 0 8px 12px -8px rgba(0, 0, 0, .45);
+    }
+    .bk {
+      position: relative; width: 118px; height: 172px; padding: 0; border: 0; background: none;
+      cursor: pointer; perspective: 700px; container-type: size;
+      border-radius: 3px 8px 8px 3px;
+      transition: transform .3s ease;
+    }
+    .bk:hover { transform: translateY(-5px); }
+    .bk:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+    .bk-pages {
+      position: absolute; inset: 3px 2px 3px 5px; border-radius: 2px 6px 6px 2px;
+      background:
+        repeating-linear-gradient(to bottom, transparent 0 9px, rgba(0, 0, 0, .06) 9px 10px) 10px 18px / calc(100% - 20px) calc(100% - 36px) no-repeat,
+        var(--page);
+      box-shadow: inset -2px 0 0 rgba(0, 0, 0, .08), 0 10px 16px -10px rgba(0, 0, 0, .5);
+    }
+    .bk .art {
+      transform-origin: left center;
+      transition: transform .55s cubic-bezier(.3, .7, .3, 1), box-shadow .55s;
+      box-shadow: 0 10px 16px -10px rgba(0, 0, 0, .55);
+    }
+    .bk:hover .art, .bk:focus-visible .art { transform: rotateY(-32deg); box-shadow: 12px 10px 18px -10px rgba(0, 0, 0, .45); }
+
+    /* bìa sách vẽ (dùng chung cho kệ và sách mở) */
+    .art {
+      position: absolute; inset: 0; overflow: hidden;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      padding: 12cqw 9cqw 9cqw 15cqw;
+      background: var(--c); color: var(--ink2);
+      border-radius: 3px 8px 8px 3px;
+    }
+    .art::before {
+      content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 10cqw; z-index: 1;
+      background: linear-gradient(90deg, rgba(0,0,0,.3), rgba(0,0,0,.06) 65%, rgba(255,255,255,.2) 82%, rgba(0,0,0,.12));
+    }
+    .art::after {
+      content: ""; position: absolute; inset: 6cqw 6cqw 6cqw 13cqw; z-index: 1;
+      border: 1px solid currentColor; opacity: .35; border-radius: 2px; pointer-events: none;
+    }
+    .motif {
+      width: 34cqw; height: 34cqw; flex: none;
+      fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .art-title {
+      font-family: var(--display); font-weight: 600; font-size: 12.5cqw; line-height: 1.15;
+      margin-top: 7cqw; text-wrap: balance;
+    }
+    .art-title.long { font-size: 10.5cqw; }
+    .art-author {
+      margin-top: auto; font-family: var(--sans); font-size: 6.4cqw; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase; opacity: .85; line-height: 1.4;
+    }
+    .art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .art.has-img .motif, .art.has-img .art-title, .art.has-img .art-author, .art.has-img::after { display: none; }
+
+    /* ---------- Sách mở ---------- */
+    .reader {
+      width: 100%; height: 100%; max-width: none; max-height: none; margin: 0;
+      padding: 16px; border: 0; background: transparent; overflow: hidden;
+    }
+    .reader[open] { display: grid; place-items: center; }
+    .reader::backdrop { background: var(--backdrop); backdrop-filter: blur(3px); }
+    .ob-close {
+      position: fixed; top: calc(16px + env(safe-area-inset-top, 0px)); right: 16px; z-index: 5;
+      width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+      border: 1px solid var(--line); background: var(--card); color: var(--ink);
+      font-size: 24px; line-height: 1;
+    }
+    .ob-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .ob {
+      --pw: min(360px, 42vw, calc((100dvh - 64px) / 1.45));
+      position: relative; width: calc(var(--pw) * 2); height: calc(var(--pw) * 1.45);
+      perspective: 2200px;
+      transform: translateX(-25%);
+      transition: transform .9s cubic-bezier(.5, .05, .25, 1);
+    }
+    .ob.open { transform: translateX(0); }
+    .ob-page {
+      position: absolute; left: 50%; top: 0; width: 50%; height: 100%;
+      overflow-y: auto; padding: 36px 30px 30px 34px;
+      background: var(--page); color: var(--page-ink);
+      border-radius: 0 10px 10px 0;
+      box-shadow: inset 16px 0 20px -16px rgba(0, 0, 0, .35), 0 24px 48px -20px rgba(0, 0, 0, .6);
+    }
+    .ob-flap {
+      position: absolute; left: 50%; top: 0; width: 50%; height: 100%; z-index: 2;
+      transform-origin: left center; transform-style: preserve-3d;
+      transition: transform .9s cubic-bezier(.6, .05, .3, 1) .08s, opacity .3s ease .55s;
+    }
+    .ob.open .ob-flap { transform: rotateY(-180deg); }
+    .ob-front, .ob-back {
+      position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      border-radius: 3px 10px 10px 3px; overflow: hidden;
+    }
+    .ob-front { container-type: size; }
+    .ob-front .art { border-radius: 3px 10px 10px 3px; }
+    .ob-back {
+      transform: rotateY(180deg);
+      border-radius: 10px 3px 3px 10px;
+      background: radial-gradient(circle, rgba(255,255,255,.16) 1.6px, transparent 2.4px) 0 0 / 16px 16px, var(--c);
+      box-shadow: inset -16px 0 20px -16px rgba(0, 0, 0, .45);
+      display: grid; place-items: center; padding: 12%;
+    }
+    .exlibris {
+      background: var(--page); color: var(--page-ink); text-align: center;
+      padding: 22px 18px; border-radius: 6px; width: 100%;
+      outline: 1px solid var(--page); outline-offset: 4px;
+    }
+    .exlibris span { display: block; font-family: var(--sans); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; opacity: .7; }
+    .exlibris strong { display: block; font-family: var(--display); font-size: 34px; line-height: 1.2; margin: 4px 0 10px; }
+    .exlibris em { display: block; font-size: 15px; line-height: 1.45; text-wrap: balance; }
+    .ob-shelf { font-family: var(--sans); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; }
+    .ob-page h3 { font-family: var(--display); font-size: 26px; line-height: 1.2; text-wrap: balance; color: var(--page-ink); }
+    .ob-author { font-style: italic; color: #7a6f60; margin: 0 0 16px; }
+    .ob-blurb { margin: 0 0 20px; font-size: 17px; }
+    .ob-thoughts { border-top: 1px solid rgba(0, 0, 0, .12); padding-top: 16px; }
+    .ob-thoughts h4 { font-family: var(--sans); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: #7a6f60; margin: 0 0 8px; font-weight: 600; }
+    .ob-thoughts p { font-size: 17px; margin: 0 0 12px; }
+    .ob-empty { font-style: italic; color: #8a8070; }
+    @media (max-width: 700px) {
+      .ob {
+        --pw: min(calc(100vw - 32px), 420px);
+        width: var(--pw); height: min(calc(var(--pw) * 1.45), calc(100dvh - 88px));
+        transform: none; margin-top: 40px;
+      }
+      .ob.open { transform: none; }
+      .ob-page, .ob-flap { left: 0; width: 100%; }
+      .ob-page { border-radius: 10px; padding: 30px 24px; }
+      .ob.open .ob-flap { transform: rotateY(-115deg); opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ob, .ob-flap, .bk, .bk .art { transition: none; }
+    }
 
     /* Thông điệp tích cực */
     .quotes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
@@ -197,8 +362,7 @@
     .timeline li { position: relative; padding: 0 0 24px 28px; border-left: 2px solid var(--line); margin-left: 6px; }
     .timeline li:last-child { padding-bottom: 0; }
     .timeline li::before {
-      content: ""; position: absolute; left: -7px; top: 8px;
-      width: 12px; height: 12px; border-radius: 50%; background: var(--accent);
+      position: absolute; left: -10px; top: 5px;
     }
     .timeline strong { display: block; }
 
@@ -212,135 +376,7 @@
 
   <!-- ================= ĐẦU TRANG (CẢNH VẼ) ================= -->
   <header class="hero">
-    <svg class="scene" viewBox="0 0 1440 640" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-      <defs>
-        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" class="sky1"/><stop offset=".6" class="sky2"/><stop offset="1" class="sky3"/>
-        </linearGradient>
-        <radialGradient id="sunglow"><stop offset="0" class="glow1"/><stop offset="1" class="glow2"/></radialGradient>
-        <symbol id="cloud" viewBox="0 0 360 120" overflow="visible">
-          <g style="fill: var(--cloud-shade)">
-            <circle cx="60" cy="72" r="40"/><circle cx="120" cy="52" r="55"/><circle cx="190" cy="42" r="65"/>
-            <circle cx="260" cy="62" r="50"/><circle cx="310" cy="82" r="35"/><rect x="40" y="72" width="290" height="40" rx="20"/>
-          </g>
-          <g style="fill: var(--cloud)">
-            <circle cx="60" cy="60" r="40"/><circle cx="120" cy="40" r="55"/><circle cx="190" cy="30" r="65"/>
-            <circle cx="260" cy="50" r="50"/><circle cx="310" cy="70" r="35"/><rect x="40" y="60" width="290" height="36" rx="18"/>
-          </g>
-        </symbol>
-        <symbol id="tower" viewBox="0 0 380 260" overflow="visible">
-          <g style="fill: var(--cloud-shade)">
-            <circle cx="100" cy="210" r="70"/><circle cx="190" cy="185" r="85"/><circle cx="285" cy="212" r="65"/>
-            <circle cx="150" cy="122" r="65"/><circle cx="235" cy="104" r="60"/><circle cx="192" cy="54" r="50"/>
-          </g>
-          <g style="fill: var(--cloud)">
-            <circle cx="96" cy="200" r="66"/><circle cx="186" cy="172" r="82"/><circle cx="280" cy="202" r="60"/>
-            <circle cx="146" cy="110" r="62"/><circle cx="230" cy="92" r="56"/><circle cx="188" cy="44" r="46"/>
-          </g>
-        </symbol>
-      </defs>
-
-      <!-- bầu trời -->
-      <rect width="1440" height="640" fill="url(#sky)"/>
-
-      <!-- sao (chỉ hiện ban đêm) -->
-      <g class="stars">
-        <circle cx="80" cy="40" r="1.6"/><circle cx="190" cy="110" r="1.2"/><circle cx="260" cy="30" r="1.8"/>
-        <circle cx="340" cy="160" r="1.1"/><circle cx="420" cy="70" r="1.5"/><circle cx="505" cy="20" r="1.2"/>
-        <circle cx="560" cy="140" r="1.6"/><circle cx="640" cy="60" r="1.1"/><circle cx="700" cy="190" r="1.3"/>
-        <circle cx="770" cy="35" r="1.7"/><circle cx="830" cy="120" r="1.2"/><circle cx="900" cy="50" r="1.4"/>
-        <circle cx="960" cy="180" r="1.1"/><circle cx="1010" cy="80" r="1.8"/><circle cx="1290" cy="40" r="1.3"/>
-        <circle cx="1340" cy="150" r="1.6"/><circle cx="1400" cy="90" r="1.2"/><circle cx="1060" cy="25" r="1.2"/>
-        <circle cx="130" cy="220" r="1.1"/><circle cx="1380" cy="230" r="1.1"/><circle cx="470" cy="230" r="1"/>
-      </g>
-
-      <!-- mặt trời / mặt trăng -->
-      <circle cx="1190" cy="150" r="170" fill="url(#sunglow)"/>
-      <circle cx="1190" cy="150" r="46" style="fill: var(--sun)"/>
-
-      <!-- mây -->
-      <g class="drift"><use href="#tower" x="40" y="150" width="380" height="260"/></g>
-      <g class="drift d2"><use href="#cloud" x="420" y="60" width="300" height="100"/></g>
-      <g class="drift d3"><use href="#cloud" x="40" y="40" width="250" height="84"/></g>
-      <g class="drift d2"><use href="#cloud" x="1000" y="250" width="220" height="74"/></g>
-      <g class="drift"><use href="#cloud" x="760" y="160" width="160" height="54"/></g>
-
-      <!-- chim -->
-      <g fill="none" stroke-width="2" stroke-linecap="round" style="stroke: var(--bird)">
-        <path d="M1000 250 q6 -6 12 0 q6 -6 12 0"/>
-        <path d="M1032 234 q5 -5 10 0 q5 -5 10 0"/>
-        <path d="M1060 258 q4 -4 8 0 q4 -4 8 0"/>
-      </g>
-
-      <!-- núi xa -->
-      <path style="fill: var(--mtn)" d="M0 380 C120 330 220 300 330 330 C420 355 480 312 600 302 C720 292 800 340 900 345 C1000 350 1080 302 1200 310 C1300 318 1380 350 1440 345 L1440 640 L0 640 Z"/>
-      <!-- đồi xa -->
-      <path style="fill: var(--hill-far)" d="M0 420 C160 382 300 395 440 410 C600 428 720 382 880 386 C1040 390 1160 420 1300 400 C1370 390 1420 395 1440 400 L1440 640 L0 640 Z"/>
-      <!-- đồi giữa -->
-      <path style="fill: var(--hill-mid)" d="M0 470 C180 432 360 440 540 455 C720 470 860 442 1040 446 C1220 450 1340 470 1440 460 L1440 640 L0 640 Z"/>
-
-      <!-- ruộng -->
-      <g stroke-width="3" stroke-linejoin="round" style="stroke: var(--hill-mid)">
-        <path style="fill: var(--field1)" d="M70 468 L330 450 L380 500 L110 525 Z"/>
-        <path style="fill: var(--field2)" d="M330 450 L520 456 L560 505 L380 500 Z"/>
-        <path style="fill: var(--field3)" d="M110 525 L380 500 L410 552 L140 582 Z"/>
-        <path style="fill: var(--field1)" d="M380 500 L560 505 L600 556 L410 552 Z"/>
-        <path style="fill: var(--field2)" d="M1090 450 L1300 462 L1330 505 L1110 500 Z"/>
-        <path style="fill: var(--field1)" d="M1110 500 L1330 505 L1362 552 L1130 548 Z"/>
-        <path style="fill: var(--field3)" d="M1300 462 L1440 465 L1440 508 L1330 505 Z"/>
-      </g>
-
-      <!-- ngôi nhà nhỏ -->
-      <g>
-        <rect x="548" y="430" width="44" height="26" style="fill: var(--wall)"/>
-        <polygon points="541,433 570,409 599,433" style="fill: var(--roof)"/>
-        <rect x="556" y="438" width="9" height="8" style="fill: var(--window)"/>
-        <rect x="575" y="442" width="8" height="14" style="fill: var(--trunk)"/>
-        <circle cx="614" cy="436" r="14" style="fill: var(--tree)"/>
-        <circle cx="624" cy="424" r="11" style="fill: var(--tree-light)"/>
-      </g>
-
-      <!-- đường đất -->
-      <path style="fill: var(--path)" d="M640 640 C632 600 598 576 622 546 C642 520 600 496 585 470 L596 469 C616 494 664 520 648 548 C632 578 690 606 770 640 Z"/>
-
-      <!-- gò cỏ phía trước -->
-      <path style="fill: var(--grass)" d="M0 560 C200 522 420 540 600 560 C760 578 800 520 900 512 C1040 500 1260 540 1440 530 L1440 640 L0 640 Z"/>
-
-      <!-- cây lớn -->
-      <ellipse cx="905" cy="522" rx="95" ry="10" style="fill: var(--grass-dark)" opacity=".5"/>
-      <path style="fill: var(--trunk)" d="M890 522 C894 490 893 465 880 440 L892 437 C902 455 906 462 907 468 C916 452 926 440 940 430 L946 436 C930 452 918 476 920 522 Z"/>
-      <g style="fill: var(--tree-dark)">
-        <circle cx="840" cy="433" r="50"/><circle cx="905" cy="408" r="70"/><circle cx="970" cy="428" r="55"/>
-        <circle cx="870" cy="378" r="52"/><circle cx="940" cy="373" r="52"/><circle cx="905" cy="353" r="45"/>
-      </g>
-      <g style="fill: var(--tree)">
-        <circle cx="842" cy="422" r="44"/><circle cx="905" cy="398" r="64"/><circle cx="968" cy="418" r="48"/>
-        <circle cx="872" cy="368" r="46"/><circle cx="938" cy="364" r="46"/><circle cx="905" cy="344" r="40"/>
-      </g>
-      <g style="fill: var(--tree-light)" opacity=".85">
-        <circle cx="940" cy="352" r="26"/><circle cx="972" cy="398" r="24"/><circle cx="912" cy="330" r="20"/>
-        <circle cx="955" cy="376" r="16"/>
-      </g>
-
-      <!-- cỏ phía trước cùng & hoa -->
-      <path style="fill: var(--grass-front)" d="M0 600 C240 575 480 590 720 605 C960 620 1200 585 1440 595 L1440 640 L0 640 Z"/>
-      <g fill="none" stroke-width="2" stroke-linecap="round" style="stroke: var(--grass-dark)">
-        <path d="M120 600 q2 -14 6 -18 M128 601 q-1 -10 -5 -14"/>
-        <path d="M380 592 q2 -14 6 -18 M388 593 q-1 -10 -5 -14"/>
-        <path d="M820 610 q2 -14 6 -18 M828 611 q-1 -10 -5 -14"/>
-        <path d="M1180 594 q2 -14 6 -18 M1188 595 q-1 -10 -5 -14"/>
-      </g>
-      <g fill="#fff" opacity=".9">
-        <circle cx="160" cy="612" r="3"/><circle cx="240" cy="620" r="2.5"/><circle cx="430" cy="606" r="3"/>
-        <circle cx="520" cy="618" r="2.5"/><circle cx="860" cy="622" r="3"/><circle cx="1010" cy="612" r="2.5"/>
-        <circle cx="1230" cy="606" r="3"/><circle cx="1330" cy="618" r="2.5"/>
-      </g>
-      <g fill="#f2c94c">
-        <circle cx="200" cy="616" r="2.5"/><circle cx="470" cy="614" r="2.5"/><circle cx="940" cy="618" r="2.5"/>
-        <circle cx="1100" cy="604" r="2.5"/><circle cx="1290" cy="612" r="2.5"/>
-      </g>
-    </svg>
-
+    <img class="bg" src="images/dong-hoa.jpg" alt="">
     <div class="hero-text">
       <p class="kicker">Đọc · Nghĩ · Viết</p>
       <h1>Góc nhỏ của Ruby</h1>
@@ -368,130 +404,36 @@
       <p>Trang này là nơi mình ghi lại những suy nghĩ sau mỗi cuốn sách, những thông điệp tích cực mình muốn giữ và những câu chuyện nhỏ thường ngày. Cảm ơn bạn đã ghé qua 🌿</p>
     </section>
 
-    <!-- ================= GÓC SÁCH ================= -->
+    <!-- ================= GÓC SÁCH =================
+         Danh sách sách nằm trong biến BOOKS ở cuối trang. -->
     <section id="goc-sach">
       <p class="eyebrow">Đã đọc &amp; đang đọc</p>
       <h2>Góc sách</h2>
       <p class="lead">Những cuốn sách đã đi qua đời mình, và những gì chúng để lại.</p>
-
-      <!-- ===== VĂN HỌC NƯỚC NGOÀI ===== -->
-      <h3 class="shelf-title">Văn học nước ngoài</h3>
-      <div class="books">
-
-        <!-- ▼ MẪU 1 CUỐN SÁCH: copy từ dòng này đến "HẾT MẪU" để thêm sách mới.
-             --spine là màu gáy sách bên trái, đổi tuỳ thích.
-             Muốn thêm cảm nghĩ, chèn khối này vào trước </article>:
-             <details><summary>Cảm nghĩ của mình</summary><p>...</p></details> ▼ -->
-        <article class="card book" style="--spine:#c98b5a">
-          <h3>Hai số phận</h3>
-          <p class="meta">Jeffrey Archer</p>
-          <p class="blurb">Hai cậu bé sinh cùng một ngày, một người là con nhà tài phiệt Boston, một người là đứa trẻ nghèo nơi rừng Ba Lan, và cuộc đua tranh theo họ suốt một đời.</p>
-        </article>
-        <!-- ▲ HẾT MẪU ▲ -->
-
-        <article class="card book" style="--spine:#b56b6b">
-          <h3>Cuốn theo chiều gió</h3>
-          <p class="meta">Margaret Mitchell</p>
-          <p class="blurb">Scarlett O'Hara và sức sống mãnh liệt giữa khói lửa nội chiến Mỹ, khi cả một thế giới cũ bị cuốn đi.</p>
-        </article>
-
-        <article class="card book" style="--spine:#7a9e7e">
-          <h3>Không gia đình</h3>
-          <p class="meta">Hector Malot</p>
-          <p class="blurb">Cậu bé Rémi theo gánh hát rong của cụ Vitalis đi khắp nước Pháp, lớn lên giữa gian khó và đi tìm một mái nhà.</p>
-        </article>
-
-        <article class="card book" style="--spine:#d1a95b">
-          <h3>Nhà giả kim</h3>
-          <p class="meta">Paulo Coelho</p>
-          <p class="blurb">Hành trình của chàng chăn cừu Santiago đi tìm kho báu, và bài học về việc lắng nghe trái tim mình.</p>
-        </article>
-
-        <article class="card book" style="--spine:#8c7bb0">
-          <h3>Người đàn ông mang tên Ove</h3>
-          <p class="meta">Fredrik Backman</p>
-          <p class="blurb">Một ông lão khó tính, cô đơn, và những người hàng xóm mới vô tình kéo ông trở lại với cuộc sống.</p>
-        </article>
-
-        <article class="card book" style="--spine:#c27a95">
-          <h3>Kiêu hãnh và định kiến</h3>
-          <p class="meta">Jane Austen</p>
-          <p class="blurb">Elizabeth Bennet và anh Darcy, câu chuyện về việc hiểu nhau thật sự khi bỏ xuống cái tôi và những ấn tượng ban đầu.</p>
-        </article>
-
-        <article class="card book" style="--spine:#5f9ea0">
-          <h3>Điều kỳ diệu của tiệm tạp hóa Namiya</h3>
-          <p class="meta">Higashino Keigo</p>
-          <p class="blurb">Một tiệm tạp hóa cũ nơi những lá thư xin lời khuyên vượt qua thời gian, nối những số phận tưởng chừng không liên quan.</p>
-        </article>
-
-        <article class="card book" style="--spine:#a0826d">
-          <h3>Muôn kiếp nhân sinh</h3>
-          <p class="meta">Nguyên Phong</p>
-          <p class="blurb">Những câu chuyện tiền kiếp của ông Thomas, một doanh nhân ở New York, xoay quanh luật nhân quả và luân hồi.</p>
-        </article>
-
-        <article class="card book" style="--spine:#9a7f4f">
-          <h3>Tiếng chim hót trong bụi mận gai</h3>
-          <p class="meta">Colleen McCullough</p>
-          <p class="blurb">Ba thế hệ nhà Cleary trên vùng đất Úc khắc nghiệt, và mối tình day dứt giữa Meggie và cha Ralph.</p>
-        </article>
-
-      </div>
-
-      <!-- ===== VĂN HỌC VIỆT NAM ===== -->
-      <h3 class="shelf-title">Văn học Việt Nam</h3>
-      <div class="books">
-
-        <article class="card book" style="--spine:#6aa84f">
-          <h3>Tủ sách Nguyễn Nhật Ánh</h3>
-          <p class="meta">Nguyễn Nhật Ánh</p>
-          <p class="blurb">Những trang văn trong trẻo về tuổi thơ, tuổi học trò và những ký ức làng quê.</p>
-        </article>
-
-        <article class="card book" style="--spine:#c0633f">
-          <h3>Thư cho em</h3>
-          <p class="meta">Hoàng Nam Tiến</p>
-          <p class="blurb">Những trang viết gần gũi, chân thành của Hoàng Nam Tiến, như những lá thư gửi người trẻ.</p>
-        </article>
-
-      </div>
-
-      <!-- ===== ĐANG ĐỌC ===== -->
-      <h3 class="shelf-title">Đang đọc</h3>
-      <div class="books">
-
-        <!-- Đọc xong thì chuyển thẻ này lên kệ "Văn học nước ngoài" và bỏ dòng tag "Đang đọc" -->
-        <article class="card book" style="--spine:#6f8fb3">
-          <span class="tag reading">Đang đọc</span>
-          <h3>Oliver Twist</h3>
-          <p class="meta">Charles Dickens</p>
-          <p class="blurb">Một cậu bé mồ côi giữ được tấm lòng trong sạch giữa những góc tối nhất của London thế kỷ 19.</p>
-        </article>
-
-      </div>
+      <p class="shelf-hint">Bấm vào một cuốn để mở sách.</p>
+      <div id="shelves"></div>
     </section>
 
-    <!-- ================= THÔNG ĐIỆP TÍCH CỰC ================= -->
+    <!-- ================= THÔNG ĐIỆP ================= -->
     <section id="thong-diep">
       <p class="eyebrow">Mỗi ngày một điều tốt</p>
-      <h2>Thông điệp tích cực</h2>
+      <h2>Thông điệp</h2>
       <p class="lead">Những câu mình viết ra để nhắc bản thân sống chậm lại, sống tử tế hơn.</p>
 
       <div class="quotes">
         <!-- ▼ MẪU 1 THÔNG ĐIỆP: copy khối <div class="card quote">...</div> để thêm ▼ -->
         <div class="card quote">
-          <p>Mỗi ngày đọc một trang sách là mỗi ngày mình lớn thêm một chút.</p>
+          <p>Biết ơn những điều nhỏ bé, rồi những điều lớn lao sẽ đến.</p>
         </div>
         <!-- ▲ HẾT MẪU ▲ -->
         <div class="card quote">
-          <p>Không cần phải vội. Hoa nở đúng mùa của nó, mình cũng vậy.</p>
+          <p>Luôn lắng nghe trái tim mình và nhìn đời bằng đôi mắt tích cực.</p>
         </div>
         <div class="card quote">
-          <p>Hãy tử tế, vì ai cũng đang mang một câu chuyện mà mình không biết.</p>
+          <p>Tâm là gốc, ý là điều khởi lên từ tâm. Tâm thiện thì ý lành. Tâm an thì ý sáng.</p>
         </div>
         <div class="card quote">
-          <p>Biết ơn những điều nhỏ bé, rồi những điều lớn lao sẽ tự tìm đến.</p>
+          <p>Mỗi ngày mới đều là một ngày hạnh phúc và đáng sống.</p>
         </div>
       </div>
     </section>
@@ -556,10 +498,10 @@
 
   <!-- ================= CHÂN TRANG ================= -->
   <footer>
-    <p>Viết bằng cả tấm lòng · Ruby · 2026</p>
+    <p>Viết bằng cả tấm lòng · Ruby · 2026<br>Ảnh bìa sách thuộc về các nhà xuất bản</p>
     <svg viewBox="0 0 1440 140" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-      <path style="fill: var(--hill-far)" d="M0 70 C240 30 480 60 720 50 C960 40 1200 22 1440 60 L1440 140 L0 140 Z"/>
-      <path style="fill: var(--hill-mid)" d="M0 100 C300 70 600 110 900 90 C1140 75 1300 95 1440 85 L1440 140 L0 140 Z"/>
+      <path style="fill: var(--forest-far)" d="M0 70 C240 30 480 60 720 50 C960 40 1200 22 1440 60 L1440 140 L0 140 Z"/>
+      <path style="fill: var(--grass)" d="M0 100 C300 70 600 110 900 90 C1140 75 1300 95 1440 85 L1440 140 L0 140 Z"/>
       <path style="fill: var(--trunk)" d="M1096 84 L1100 62 L1106 62 L1109 84 Z"/>
       <circle cx="1094" cy="58" r="14" style="fill: var(--tree)"/>
       <circle cx="1112" cy="56" r="13" style="fill: var(--tree)"/>
@@ -567,6 +509,130 @@
       <path style="fill: var(--grass-front)" d="M0 125 C400 105 800 135 1440 115 L1440 140 L0 140 Z"/>
     </svg>
   </footer>
+
+  <!-- ================= SÁCH MỞ (cửa sổ khi bấm vào một cuốn) ================= -->
+  <dialog class="reader" id="reader" aria-label="Sách đang mở">
+    <button class="ob-close" id="obClose" type="button" aria-label="Đóng sách">×</button>
+    <div class="ob" id="ob">
+      <article class="ob-page" id="obPage"></article>
+      <div class="ob-flap">
+        <div class="ob-front" id="obFront"></div>
+        <div class="ob-back" id="obBack"></div>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    /* ================= DANH SÁCH SÁCH =================
+       shelf:    "ngoai" = Văn học nước ngoài · "vn" = Văn học Việt Nam · "dang" = Đang đọc
+       color/ink: màu bìa và màu chữ trên bìa
+       motif:    hình vẽ nhỏ trên bìa
+       cover:    để trống "" thì dùng bìa vẽ; điền đường dẫn ảnh (vd "images/nha-gia-kim.jpg") để dùng bìa thật
+       thoughts: cảm nghĩ của Ruby, mỗi đoạn là một chuỗi trong [ ]                                   */
+    const BOOKS = [
+      { shelf: "ngoai", title: "Hai số phận", author: "Jeffrey Archer", color: "#6e2f2f", ink: "#f2dfc0", motif: "two", cover: "images/bia/hai-so-phan.jpg",
+        blurb: "Hai cậu bé sinh cùng một ngày, một người là con nhà tài phiệt Boston, một người là đứa trẻ nghèo nơi rừng Ba Lan, và cuộc đua tranh theo họ suốt một đời.", thoughts: [] },
+      { shelf: "ngoai", title: "Cuốn theo chiều gió", author: "Margaret Mitchell", color: "#a8432f", ink: "#fbe6c8", motif: "wind", cover: "images/bia/cuon-theo-chieu-gio.jpg",
+        blurb: "Scarlett O'Hara và sức sống mãnh liệt giữa khói lửa nội chiến Mỹ, khi cả một thế giới cũ bị cuốn đi.", thoughts: [] },
+      { shelf: "ngoai", title: "Không gia đình", author: "Hector Malot", color: "#3f6b5a", ink: "#f3ead2", motif: "road", cover: "images/bia/khong-gia-dinh.jpg",
+        blurb: "Cậu bé Rémi theo gánh hát rong của cụ Vitalis đi khắp nước Pháp, lớn lên giữa gian khó và đi tìm một mái nhà.", thoughts: [] },
+      { shelf: "ngoai", title: "Nhà giả kim", author: "Paulo Coelho", color: "#c9913e", ink: "#3a2614", motif: "desert", cover: "images/bia/nha-gia-kim.jpg",
+        blurb: "Hành trình của chàng chăn cừu Santiago đi tìm kho báu, và bài học về việc lắng nghe trái tim mình.", thoughts: [] },
+      { shelf: "ngoai", title: "Người đàn ông mang tên Ove", author: "Fredrik Backman", color: "#4f6d8f", ink: "#f6efe0", motif: "house", cover: "images/bia/nguoi-dan-ong-mang-ten-ove.jpg",
+        blurb: "Một ông lão khó tính, cô đơn, và những người hàng xóm mới vô tình kéo ông trở lại với cuộc sống.", thoughts: [] },
+      { shelf: "ngoai", title: "Kiêu hãnh và định kiến", author: "Jane Austen", color: "#e7c9c6", ink: "#6b2f3a", motif: "rose", cover: "images/bia/kieu-hanh-va-dinh-kien.jpg",
+        blurb: "Elizabeth Bennet và anh Darcy, câu chuyện về việc hiểu nhau thật sự khi bỏ xuống cái tôi và những ấn tượng ban đầu.", thoughts: [] },
+      { shelf: "ngoai", title: "Điều kỳ diệu của tiệm tạp hóa Namiya", author: "Higashino Keigo", color: "#26475e", ink: "#f4d58d", motif: "letter", cover: "images/bia/tiem-tap-hoa-namiya.jpg",
+        blurb: "Một tiệm tạp hóa cũ nơi những lá thư xin lời khuyên vượt qua thời gian, nối những số phận tưởng chừng không liên quan.", thoughts: [] },
+      { shelf: "ngoai", title: "Muôn kiếp nhân sinh", author: "Nguyên Phong", color: "#7d5a8c", ink: "#f2e6d8", motif: "rings", cover: "images/bia/muon-kiep-nhan-sinh.jpg",
+        blurb: "Những câu chuyện tiền kiếp của ông Thomas, một doanh nhân ở New York, xoay quanh luật nhân quả và luân hồi.", thoughts: [] },
+      { shelf: "ngoai", title: "Tiếng chim hót trong bụi mận gai", author: "Colleen McCullough", color: "#5b6e3a", ink: "#f1e4c4", motif: "thornbird", cover: "images/bia/tieng-chim-hot.jpg",
+        blurb: "Ba thế hệ nhà Cleary trên vùng đất Úc khắc nghiệt, và mối tình day dứt giữa Meggie và cha Ralph.", thoughts: [] },
+
+      { shelf: "vn", title: "Tủ sách Nguyễn Nhật Ánh", author: "Nguyễn Nhật Ánh", color: "#e9d36a", ink: "#45521f", motif: "flower", cover: "images/bia/nguyen-nhat-anh.jpg",
+        blurb: "Những trang văn trong trẻo về tuổi thơ, tuổi học trò và những ký ức làng quê.", thoughts: [] },
+      { shelf: "vn", title: "Thư cho em", author: "Hoàng Nam Tiến", color: "#f3ede0", ink: "#9b3b2e", motif: "loveletter", cover: "images/bia/thu-cho-em.jpg",
+        blurb: "Chuyện tình của tướng Hoàng Đan và người vợ, được người con trai là Hoàng Nam Tiến kể lại qua những lá thư.", thoughts: [] },
+
+      { shelf: "dang", title: "Oliver Twist", author: "Charles Dickens", color: "#2f4058", ink: "#e9dcc0", motif: "lamp", cover: "images/bia/oliver-twist.jpg",
+        blurb: "Một cậu bé mồ côi giữ được tấm lòng trong sạch giữa những góc tối nhất của London thế kỷ 19.", thoughts: [] },
+    ];
+
+    const SHELVES = [["ngoai", "Văn học nước ngoài"], ["vn", "Văn học Việt Nam"], ["dang", "Đang đọc"]];
+
+    const MOTIFS = {
+      two: '<circle cx="18" cy="24" r="11"/><circle cx="30" cy="24" r="11"/>',
+      wind: '<path d="M6 18h24a5 5 0 1 0-5-5M6 26h32a5 5 0 1 1-5 5M6 34h16"/>',
+      road: '<path d="M16 44 21 22M32 44 27 22M24 40v-3M24 32v-3"/><path d="M24 4l2.4 5 5.4.6-4 3.7 1.1 5.3L24 16l-4.9 2.6 1.1-5.3-4-3.7 5.4-.6z"/>',
+      desert: '<circle cx="33" cy="13" r="6"/><path d="M4 40 18 20l14 20ZM22 40l12-14 12 14"/>',
+      house: '<path d="M8 40V22L24 10l16 12v18ZM20 40V30h8v10"/>',
+      rose: '<path d="M24 44V23"/><circle cx="24" cy="16" r="7"/><path d="M21 16c1-3 5-3 6 0M24 31c-6-3-11-1-11 3 5 1 9 0 11-3ZM24 36c6-3 11-1 11 3-5 1-9 0-11-3Z"/>',
+      letter: '<rect x="7" y="14" width="34" height="22" rx="2"/><path d="M7 16l17 12 17-12"/>',
+      rings: '<circle cx="24" cy="24" r="5"/><circle cx="24" cy="24" r="11"/><circle cx="24" cy="24" r="18" stroke-dasharray="3 4"/>',
+      thornbird: '<path d="M4 36c12-4 26-2 40-8M12 34l-2-5M22 33l1-5M33 31l-1-5"/><path d="M27 24c2-6 8-7 11-4l4-1-3 3c0 4-4 6-9 6-2 0-3-2-3-4Z"/>',
+      flower: '<circle cx="24" cy="10" r="4"/><circle cx="32" cy="17" r="4"/><circle cx="24" cy="24" r="4"/><circle cx="16" cy="17" r="4"/><circle cx="24" cy="17" r="2.5"/><path d="M24 28v16M24 38c-4-4-8-3-10-2M24 35c4-4 8-3 10-2"/>',
+      loveletter: '<rect x="7" y="17" width="34" height="22" rx="2"/><path d="M7 19l17 11 17-11"/><path d="M24 14c-2-4-8-3-7 1 1 3 7 6 7 6s6-3 7-6c1-4-5-5-7-1Z"/>',
+      lamp: '<path d="M24 44V18M18 44h12M17 10h14l-3 8h-8ZM24 6v4"/>',
+    };
+
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    const shelfName = key => (SHELVES.find(s => s[0] === key) || [, ""])[1];
+
+    function coverArt(b) {
+      const img = b.cover ? `<img src="${esc(b.cover)}" alt="">` : "";
+      const long = b.title.length > 22 ? " long" : "";
+      return `<span class="art${b.cover ? " has-img" : ""}" style="--c:${b.color};--ink2:${b.ink}">${img}` +
+        `<svg class="motif" viewBox="0 0 48 48" aria-hidden="true">${MOTIFS[b.motif] || ""}</svg>` +
+        `<span class="art-title${long}">${esc(b.title)}</span><span class="art-author">${esc(b.author)}</span></span>`;
+    }
+
+    document.getElementById("shelves").innerHTML = SHELVES.map(([key, label]) => {
+      const books = BOOKS.map((b, i) => [b, i]).filter(([b]) => b.shelf === key);
+      if (!books.length) return "";
+      return `<h3 class="shelf-title">${label}</h3><div class="shelf">` + books.map(([b, i]) =>
+        `<div class="slot"><button class="bk" type="button" data-i="${i}" aria-label="Mở sách ${esc(b.title)}">` +
+        `<span class="bk-pages"></span>${coverArt(b)}</button></div>`).join("") + `</div>`;
+    }).join("");
+
+    const reader = document.getElementById("reader"), ob = document.getElementById("ob");
+    const obPage = document.getElementById("obPage"), obFront = document.getElementById("obFront"), obBack = document.getElementById("obBack");
+    const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let lastBtn = null, closing = false;
+
+    function openBook(i, btn) {
+      const b = BOOKS[i];
+      lastBtn = btn;
+      obFront.innerHTML = coverArt(b);
+      obBack.style.setProperty("--c", b.color);
+      obBack.innerHTML = `<div class="exlibris"><span>Sách của</span><strong>Ruby</strong><em>${esc(b.title)}</em></div>`;
+      const thoughts = b.thoughts.length
+        ? b.thoughts.map(p => `<p>${esc(p)}</p>`).join("")
+        : `<p class="ob-empty">Cảm nghĩ đang được viết…</p>`;
+      obPage.innerHTML = `<p class="ob-shelf">${shelfName(b.shelf)}</p><h3>${esc(b.title)}</h3>` +
+        `<p class="ob-author">${esc(b.author)}</p><p class="ob-blurb">${esc(b.blurb)}</p>` +
+        `<div class="ob-thoughts"><h4>Cảm nghĩ của mình</h4>${thoughts}</div>`;
+      obPage.scrollTop = 0;
+      ob.classList.remove("open");
+      reader.showModal();
+      requestAnimationFrame(() => requestAnimationFrame(() => ob.classList.add("open")));
+    }
+
+    function closeBook() {
+      if (closing || !reader.open) return;
+      closing = true;
+      ob.classList.remove("open");
+      setTimeout(() => { reader.close(); closing = false; if (lastBtn) lastBtn.focus(); }, reduced() ? 0 : 850);
+    }
+
+    document.getElementById("shelves").addEventListener("click", e => {
+      const btn = e.target.closest(".bk");
+      if (btn) openBook(+btn.dataset.i, btn);
+    });
+    document.getElementById("obClose").addEventListener("click", closeBook);
+    reader.addEventListener("cancel", e => { e.preventDefault(); closeBook(); });
+    reader.addEventListener("click", e => { if (e.target === reader) closeBook(); });
+
+  </script>
 
 </body>
 </html>
