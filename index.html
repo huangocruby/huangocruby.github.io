@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Góc nhỏ của Ruby</title>
+  <meta name="description" content="Nơi Ruby viết về những cuốn sách, những điều tích cực và những câu chuyện nhỏ.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #faf6ef;
+      --card: #fffdf8;
+      --ink: #2b2622;
+      --muted: #7a6f66;
+      --accent: #b5543a;
+      --accent-soft: #f3e2d6;
+      --line: #e8dfd2;
+      --serif: "Lora", Georgia, serif;
+      --sans: "Be Vietnam Pro", system-ui, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #1c1916;
+        --card: #25211d;
+        --ink: #ece4d8;
+        --muted: #a89c8f;
+        --accent: #e08a6c;
+        --accent-soft: #3a2a22;
+        --line: #3a332c;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1.75;
+    }
+    a { color: var(--accent); }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+
+    /* ---------- Đầu trang ---------- */
+    header.hero { text-align: center; padding: 72px 0 40px; }
+    .hero .mark { font-size: 40px; line-height: 1; }
+    .hero h1 { font-size: clamp(34px, 7vw, 52px); margin: 12px 0 8px; font-weight: 700; letter-spacing: -0.5px; }
+    .hero p { color: var(--muted); font-style: italic; margin: 0 auto; max-width: 520px; }
+
+    /* ---------- Thanh menu ---------- */
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      background: var(--paper);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    nav ul {
+      list-style: none; margin: 0 auto; padding: 0 16px;
+      max-width: 760px;
+      display: flex; gap: 24px; justify-content: center;
+      overflow-x: auto; white-space: nowrap;
+      font-family: var(--sans); font-size: 15px;
+    }
+    nav a { display: block; padding: 14px 0; color: var(--muted); text-decoration: none; }
+    nav a:hover { color: var(--accent); }
+    @media (max-width: 600px) { nav ul { justify-content: flex-start; gap: 20px; } }
+
+    /* ---------- Các phần ---------- */
+    section { padding: 64px 0 8px; scroll-margin-top: 48px; }
+    .eyebrow { font-family: var(--sans); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin: 0; }
+    h2 { font-size: 32px; margin: 4px 0 8px; }
+    .lead { color: var(--muted); margin: 0 0 28px; }
+    h3 { font-size: 22px; margin: 0 0 4px; line-height: 1.35; }
+    .meta { font-family: var(--sans); font-size: 14px; color: var(--muted); margin: 0 0 12px; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 24px;
+    }
+    .stack > * + * { margin-top: 20px; }
+
+    /* Nút "Đọc tiếp" */
+    details summary {
+      cursor: pointer; list-style: none;
+      font-family: var(--sans); font-size: 15px; font-weight: 500;
+      color: var(--accent); margin-top: 8px;
+    }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::after { content: " →"; }
+    details[open] summary::after { content: " ↑"; }
+    details[open] summary { margin-bottom: 8px; }
+
+    /* Góc sách */
+    .books { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    @media (max-width: 640px) { .books { grid-template-columns: 1fr; } }
+    .tag {
+      display: inline-block; font-family: var(--sans); font-size: 12px; font-weight: 600;
+      padding: 3px 10px; border-radius: 999px; margin-bottom: 12px;
+      background: var(--accent-soft); color: var(--accent);
+    }
+    .tag.reading { background: transparent; border: 1px solid var(--accent); }
+    .fav { border-left: 3px solid var(--accent); padding-left: 14px; font-style: italic; color: var(--muted); }
+
+    /* Thông điệp tích cực */
+    .quotes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    @media (max-width: 640px) { .quotes { grid-template-columns: 1fr; } }
+    .quote { position: relative; padding-top: 40px; }
+    .quote::before {
+      content: "“"; position: absolute; top: 4px; left: 20px;
+      font-size: 64px; line-height: 1; color: var(--accent); opacity: .5;
+    }
+    .quote p { font-size: 20px; font-style: italic; margin: 0; }
+
+    /* Lotteria */
+    .timeline { list-style: none; padding: 0; margin: 24px 0 0; }
+    .timeline li { position: relative; padding: 0 0 24px 28px; border-left: 2px solid var(--line); margin-left: 6px; }
+    .timeline li:last-child { padding-bottom: 0; }
+    .timeline li::before {
+      content: ""; position: absolute; left: -7px; top: 8px;
+      width: 12px; height: 12px; border-radius: 50%; background: var(--accent);
+    }
+    .timeline strong { display: block; }
+
+    footer { text-align: center; color: var(--muted); font-family: var(--sans); font-size: 14px; padding: 72px 16px 48px; }
+  </style>
+</head>
+<body>
+
+  <!-- ================= ĐẦU TRANG ================= -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="mark">📖</div>
+      <h1>Góc nhỏ của Ruby</h1>
+      <p>Nơi mình viết về những cuốn sách đã đọc, những điều tích cực của cuộc sống và vài câu chuyện nhỏ của riêng mình.</p>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#ve-minh">Về mình</a></li>
+      <li><a href="#goc-sach">Góc sách</a></li>
+      <li><a href="#thong-diep">Thông điệp</a></li>
+      <li><a href="#chuyen-nho">Chuyện nhỏ</a></li>
+      <li><a href="#lotteria">Lotteria</a></li>
+    </ul>
+  </nav>
+
+  <main class="wrap">
+
+    <!-- ================= VỀ MÌNH ================= -->
+    <section id="ve-minh">
+      <p class="eyebrow">Xin chào</p>
+      <h2>Về mình</h2>
+      <p>Mình là Ruby, một người yêu môn Văn từ thuở đi học và chưa bao giờ thôi thích đọc sách. Với mình, mỗi cuốn sách là một người bạn, mỗi trang viết là một lần được sống thêm một cuộc đời khác.</p>
+      <p>Trang này là nơi mình ghi lại những suy nghĩ sau mỗi cuốn sách, những thông điệp tích cực mình muốn giữ và những câu chuyện nhỏ thường ngày. Cảm ơn bạn đã ghé qua 🌿</p>
+    </section>
+
+    <!-- ================= GÓC SÁCH ================= -->
+    <section id="goc-sach">
+      <p class="eyebrow">Đã đọc &amp; đang đọc</p>
+      <h2>Góc sách</h2>
+      <p class="lead">Những cuốn sách đã đi qua đời mình, và những gì chúng để lại.</p>
+
+      <div class="books">
+
+        <!-- ▼ MẪU 1 CUỐN SÁCH: copy từ dòng này đến "HẾT MẪU" để thêm sách mới ▼ -->
+        <article class="card">
+          <span class="tag">Đã đọc</span>
+          <h3>Nhà giả kim</h3>
+          <p class="meta">Paulo Coelho</p>
+          <p>Viết 2–3 câu cảm nhận ngắn: cuốn sách này kể về điều gì, và điều gì khiến mình nhớ mãi?</p>
+          <details>
+            <summary>Đọc cảm nghĩ đầy đủ</summary>
+            <p>Viết cảm nghĩ dài hơn ở đây. Có thể viết bao nhiêu đoạn tuỳ thích, mỗi đoạn bọc trong một cặp thẻ &lt;p&gt;...&lt;/p&gt;.</p>
+            <p class="fav">Câu mình thích nhất, hoặc điều mình tâm đắc nhất sau khi đọc.</p>
+          </details>
+        </article>
+        <!-- ▲ HẾT MẪU ▲ -->
+
+        <article class="card">
+          <span class="tag reading">Đang đọc</span>
+          <h3>Tên cuốn sách đang đọc</h3>
+          <p class="meta">Tên tác giả</p>
+          <p>Mình đang đọc đến đâu, cảm giác ban đầu thế nào, điều gì khiến mình tò mò muốn đọc tiếp?</p>
+          <details>
+            <summary>Đọc cảm nghĩ đầy đủ</summary>
+            <p>Viết thêm suy nghĩ ở đây khi đọc xong.</p>
+          </details>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= THÔNG ĐIỆP TÍCH CỰC ================= -->
+    <section id="thong-diep">
+      <p class="eyebrow">Mỗi ngày một điều tốt</p>
+      <h2>Thông điệp tích cực</h2>
+      <p class="lead">Những câu mình viết ra để nhắc bản thân sống chậm lại, sống tử tế hơn.</p>
+
+      <div class="quotes">
+        <!-- ▼ MẪU 1 THÔNG ĐIỆP: copy khối <div class="card quote">...</div> để thêm ▼ -->
+        <div class="card quote">
+          <p>Mỗi ngày đọc một trang sách là mỗi ngày mình lớn thêm một chút.</p>
+        </div>
+        <!-- ▲ HẾT MẪU ▲ -->
+        <div class="card quote">
+          <p>Không cần phải vội. Hoa nở đúng mùa của nó, mình cũng vậy.</p>
+        </div>
+        <div class="card quote">
+          <p>Hãy tử tế, vì ai cũng đang mang một câu chuyện mà mình không biết.</p>
+        </div>
+        <div class="card quote">
+          <p>Biết ơn những điều nhỏ bé, rồi những điều lớn lao sẽ tự tìm đến.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CHUYỆN NHỎ & CẢM NGHĨ ================= -->
+    <section id="chuyen-nho">
+      <p class="eyebrow">Tản mạn</p>
+      <h2>Chuyện nhỏ &amp; cảm nghĩ</h2>
+      <p class="lead">Những mẩu chuyện thường ngày và vài dòng suy nghĩ vụn vặt.</p>
+
+      <div class="stack">
+        <!-- ▼ MẪU 1 BÀI VIẾT: copy từ dòng này đến "HẾT MẪU" để thêm bài mới (bài mới đặt lên trên cùng) ▼ -->
+        <article class="card">
+          <p class="meta">14 tháng 10, 2026</p>
+          <h3>Tiêu đề câu chuyện</h3>
+          <p>Một đoạn mở đầu ngắn, đủ để người đọc muốn bấm "Đọc tiếp".</p>
+          <details>
+            <summary>Đọc tiếp</summary>
+            <p>Phần còn lại của câu chuyện. Viết thoải mái nhiều đoạn, mỗi đoạn một cặp thẻ &lt;p&gt;...&lt;/p&gt;.</p>
+          </details>
+        </article>
+        <!-- ▲ HẾT MẪU ▲ -->
+
+        <article class="card">
+          <p class="meta">Ngày tháng</p>
+          <h3>Một buổi chiều đọc sách</h3>
+          <p>Ví dụ một cảm nghĩ ngắn, không cần nút "Đọc tiếp" nếu bài chỉ vài dòng.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= LOTTERIA ================= -->
+    <section id="lotteria">
+      <p class="eyebrow">Hành trình làm việc</p>
+      <h2>Những ngày ở Lotteria</h2>
+      <p class="lead">Không phải hồ sơ công việc, chỉ là vài dòng cảm nghĩ về một chặng đường.</p>
+
+      <div class="card">
+        <p style="margin-top:0">Viết cảm nghĩ về quãng thời gian làm ở Lotteria: điều gì khiến mình gắn bó, những con người mình gặp, bài học mình nhận được, khoảnh khắc đáng nhớ nhất...</p>
+
+        <h3 style="margin-top:28px">Những việc mình đã làm</h3>
+        <ul class="timeline">
+          <!-- ▼ MẪU 1 MỐC: copy khối <li>...</li> để thêm ▼ -->
+          <li>
+            <strong>Phát triển cửa hàng mới</strong>
+            Tìm kiếm, đánh giá mặt bằng và đồng hành cùng các cửa hàng từ lúc còn trên giấy đến ngày khai trương.
+          </li>
+          <!-- ▲ HẾT MẪU ▲ -->
+          <li>
+            <strong>Hợp đồng thuê mặt bằng</strong>
+            Đọc, góp ý và thương lượng hợp đồng với các trung tâm thương mại, nơi tấm bằng luật được dùng mỗi ngày.
+          </li>
+          <li>
+            <strong>Nhượng quyền thương hiệu</strong>
+            Tư vấn và trò chuyện với những người muốn cùng Lotteria mở cửa hàng của riêng họ.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    Viết bằng cả tấm lòng · Ruby · 2026
+  </footer>
+
+</body>
+</html>
