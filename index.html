@@ -175,6 +175,12 @@
     }
     .tag.reading { background: transparent; border: 1px solid var(--accent2); color: var(--accent2); }
     .fav { border-left: 3px solid var(--accent); padding-left: 14px; font-style: italic; color: var(--muted); }
+    .shelf-title { font-size: 24px; margin: 40px 0 16px; }
+    .shelf-title:first-of-type { margin-top: 8px; }
+    .book { border-left: 6px solid var(--spine, var(--accent)); padding: 20px 22px; }
+    .book h3 { font-size: 20px; }
+    .book .meta { margin-bottom: 8px; }
+    .book .blurb { margin: 0; font-size: 16px; line-height: 1.65; }
 
     /* Thông điệp tích cực */
     .quotes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
@@ -368,21 +374,98 @@
       <h2>Góc sách</h2>
       <p class="lead">Những cuốn sách đã đi qua đời mình, và những gì chúng để lại.</p>
 
+      <!-- ===== VĂN HỌC NƯỚC NGOÀI ===== -->
+      <h3 class="shelf-title">Văn học nước ngoài</h3>
       <div class="books">
 
-        <!-- ▼ MẪU 1 CUỐN SÁCH: copy từ dòng này đến "HẾT MẪU" để thêm sách mới ▼ -->
-        <article class="card">
-          <span class="tag">Đã đọc</span>
-          <h3>Nhà giả kim</h3>
-          <p class="meta">Paulo Coelho</p>
-          <p>Viết 2–3 câu cảm nhận ngắn: cuốn sách này kể về điều gì, và điều gì khiến mình nhớ mãi?</p>
-          <details>
-            <summary>Đọc cảm nghĩ đầy đủ</summary>
-            <p>Viết cảm nghĩ dài hơn ở đây. Có thể viết bao nhiêu đoạn tuỳ thích, mỗi đoạn bọc trong một cặp thẻ &lt;p&gt;...&lt;/p&gt;.</p>
-            <p class="fav">Câu mình thích nhất, hoặc điều mình tâm đắc nhất sau khi đọc.</p>
-          </details>
+        <!-- ▼ MẪU 1 CUỐN SÁCH: copy từ dòng này đến "HẾT MẪU" để thêm sách mới.
+             --spine là màu gáy sách bên trái, đổi tuỳ thích.
+             Muốn thêm cảm nghĩ, chèn khối này vào trước </article>:
+             <details><summary>Cảm nghĩ của mình</summary><p>...</p></details> ▼ -->
+        <article class="card book" style="--spine:#c98b5a">
+          <h3>Hai số phận</h3>
+          <p class="meta">Jeffrey Archer</p>
+          <p class="blurb">Hai cậu bé sinh cùng một ngày, một người là con nhà tài phiệt Boston, một người là đứa trẻ nghèo nơi rừng Ba Lan, và cuộc đua tranh theo họ suốt một đời.</p>
         </article>
         <!-- ▲ HẾT MẪU ▲ -->
+
+        <article class="card book" style="--spine:#b56b6b">
+          <h3>Cuốn theo chiều gió</h3>
+          <p class="meta">Margaret Mitchell</p>
+          <p class="blurb">Scarlett O'Hara và sức sống mãnh liệt giữa khói lửa nội chiến Mỹ, khi cả một thế giới cũ bị cuốn đi.</p>
+        </article>
+
+        <article class="card book" style="--spine:#7a9e7e">
+          <h3>Không gia đình</h3>
+          <p class="meta">Hector Malot</p>
+          <p class="blurb">Cậu bé Rémi theo gánh hát rong của cụ Vitalis đi khắp nước Pháp, lớn lên giữa gian khó và đi tìm một mái nhà.</p>
+        </article>
+
+        <article class="card book" style="--spine:#6f8fb3">
+          <h3>Oliver Twist</h3>
+          <p class="meta">Charles Dickens</p>
+          <p class="blurb">Một cậu bé mồ côi giữ được tấm lòng trong sạch giữa những góc tối nhất của London thế kỷ 19.</p>
+        </article>
+
+        <article class="card book" style="--spine:#d1a95b">
+          <h3>Nhà giả kim</h3>
+          <p class="meta">Paulo Coelho</p>
+          <p class="blurb">Hành trình của chàng chăn cừu Santiago đi tìm kho báu, và bài học về việc lắng nghe trái tim mình.</p>
+        </article>
+
+        <article class="card book" style="--spine:#8c7bb0">
+          <h3>Người đàn ông mang tên Ove</h3>
+          <p class="meta">Fredrik Backman</p>
+          <p class="blurb">Một ông lão khó tính, cô đơn, và những người hàng xóm mới vô tình kéo ông trở lại với cuộc sống.</p>
+        </article>
+
+        <article class="card book" style="--spine:#c27a95">
+          <h3>Kiêu hãnh và định kiến</h3>
+          <p class="meta">Jane Austen</p>
+          <p class="blurb">Elizabeth Bennet và anh Darcy, câu chuyện về việc hiểu nhau thật sự khi bỏ xuống cái tôi và những ấn tượng ban đầu.</p>
+        </article>
+
+        <article class="card book" style="--spine:#5f9ea0">
+          <h3>Điều kỳ diệu của tiệm tạp hóa Namiya</h3>
+          <p class="meta">Higashino Keigo</p>
+          <p class="blurb">Một tiệm tạp hóa cũ nơi những lá thư xin lời khuyên vượt qua thời gian, nối những số phận tưởng chừng không liên quan.</p>
+        </article>
+
+        <article class="card book" style="--spine:#a0826d">
+          <h3>Muôn kiếp nhân sinh</h3>
+          <p class="meta">Nguyên Phong</p>
+          <p class="blurb">Những câu chuyện tiền kiếp của ông Thomas, một doanh nhân ở New York, xoay quanh luật nhân quả và luân hồi.</p>
+        </article>
+
+        <article class="card book" style="--spine:#9a7f4f">
+          <h3>Tiếng chim hót trong bụi mận gai</h3>
+          <p class="meta">Colleen McCullough</p>
+          <p class="blurb">Ba thế hệ nhà Cleary trên vùng đất Úc khắc nghiệt, và mối tình day dứt giữa Meggie và cha Ralph.</p>
+        </article>
+
+      </div>
+
+      <!-- ===== VĂN HỌC VIỆT NAM ===== -->
+      <h3 class="shelf-title">Văn học Việt Nam</h3>
+      <div class="books">
+
+        <article class="card book" style="--spine:#6aa84f">
+          <h3>Tủ sách Nguyễn Nhật Ánh</h3>
+          <p class="meta">Nguyễn Nhật Ánh</p>
+          <p class="blurb">Những trang văn trong trẻo về tuổi thơ, tuổi học trò và những ký ức làng quê.</p>
+        </article>
+
+        <article class="card book" style="--spine:#c0633f">
+          <h3>Thư cho em</h3>
+          <p class="meta">Hoàng Nam Tiến</p>
+          <p class="blurb">Những trang viết gần gũi, chân thành của Hoàng Nam Tiến, như những lá thư gửi người trẻ.</p>
+        </article>
+
+      </div>
+
+      <!-- ===== ĐANG ĐỌC ===== -->
+      <h3 class="shelf-title">Đang đọc</h3>
+      <div class="books">
 
         <article class="card">
           <span class="tag reading">Đang đọc</span>
