@@ -108,9 +108,11 @@
     .bg {
       position: absolute; inset: 0; width: 100%; height: 100%;
       object-fit: cover; object-position: 50% 58%;
-      animation: breathe 24s ease-in-out infinite alternate;
     }
-    @keyframes breathe { from { transform: scale(1); } to { transform: scale(1.06); } }
+    /* lớp vẽ hoa đung đưa theo gió (WebGL) và cánh hoa bay; ảnh tĩnh nằm dưới làm dự phòng */
+    canvas.wind, canvas.petals { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+    canvas.wind { opacity: 0; transition: opacity .8s ease; }
+    canvas.wind.ready { opacity: 1; }
     .hero::before {
       content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
       background: linear-gradient(to bottom, rgba(10, 40, 80, .38), rgba(10, 40, 80, .1) 38%, transparent 55%);
@@ -139,7 +141,7 @@
       .hero p.tagline { font-size: 16px; line-height: 1.6; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .bg { animation: none; }
+      canvas.wind, canvas.petals { display: none; }
     }
 
     /* ---------- Thanh menu ---------- */
@@ -166,7 +168,7 @@
     /* cỏ 4 lá */
     :root { --clover: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg transform='rotate%2845 12 12%29'%3E%3Ccircle cx='10' cy='6' r='2.9'/%3E%3Ccircle cx='14' cy='6' r='2.9'/%3E%3Cpath d='M7.3 7.2H16.7L12 12Z'/%3E%3C/g%3E%3Cg transform='rotate%28135 12 12%29'%3E%3Ccircle cx='10' cy='6' r='2.9'/%3E%3Ccircle cx='14' cy='6' r='2.9'/%3E%3Cpath d='M7.3 7.2H16.7L12 12Z'/%3E%3C/g%3E%3Cg transform='rotate%28225 12 12%29'%3E%3Ccircle cx='10' cy='6' r='2.9'/%3E%3Ccircle cx='14' cy='6' r='2.9'/%3E%3Cpath d='M7.3 7.2H16.7L12 12Z'/%3E%3C/g%3E%3Cg transform='rotate%28315 12 12%29'%3E%3Ccircle cx='10' cy='6' r='2.9'/%3E%3Ccircle cx='14' cy='6' r='2.9'/%3E%3Cpath d='M7.3 7.2H16.7L12 12Z'/%3E%3C/g%3E%3Cpath d='M12 12Q12.6 17 15.5 22' stroke='black' stroke-width='1.7' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); }
     .eyebrow { display: flex; align-items: center; gap: 8px; }
-    .eyebrow::before, .timeline li::before {
+    .eyebrow::before {
       content: ""; flex: none; width: 18px; height: 18px;
       background: var(--accent);
       -webkit-mask: var(--clover) center / contain no-repeat; mask: var(--clover) center / contain no-repeat;
@@ -361,30 +363,28 @@
     }
     .quote p { font-size: 20px; font-style: italic; margin: 0; }
 
-    /* Lotteria */
-    .timeline { list-style: none; padding: 0; margin: 24px 0 0; }
-    .timeline li { position: relative; padding: 0 0 24px 28px; border-left: 2px solid var(--line); margin-left: 6px; }
-    .timeline li:last-child { padding-bottom: 0; }
-    .timeline li::before {
-      position: absolute; left: -10px; top: 5px;
-    }
-    .timeline strong { display: block; }
-
     /* ---------- Chân trang ---------- */
     footer { text-align: center; color: var(--muted); font-family: var(--sans); font-size: 14px; padding-top: 72px; }
     footer p { margin: 0 0 16px; padding: 0 16px; }
-    footer svg { display: block; width: 100%; height: 120px; }
+    .meadow { position: relative; height: clamp(170px, 18vw, 260px); overflow: hidden; }
+    .meadow img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; }
+    .meadow::before {
+      content: ""; position: absolute; left: 0; right: 0; top: 0; height: 55%; z-index: 1;
+      background: linear-gradient(to bottom, var(--paper), transparent);
+    }
   </style>
 </head>
 <body>
 
-  <!-- ================= ĐẦU TRANG (CẢNH VẼ) ================= -->
+  <!-- ================= ĐẦU TRANG (ĐỒNG HOA) ================= -->
   <header class="hero">
     <img class="bg" src="images/dong-hoa.jpg" alt="">
+    <canvas class="wind" data-src="images/dong-hoa.jpg" data-crop="0,1" data-focus="0.5,0.58" aria-hidden="true"></canvas>
+    <canvas class="petals" aria-hidden="true"></canvas>
     <div class="hero-text">
       <p class="kicker">Đọc · Nghĩ · Viết</p>
       <h1>Góc nhỏ của Ruby</h1>
-      <p class="tagline">Nơi mình viết về những cuốn sách đã đọc, những điều tích cực của cuộc sống và vài câu chuyện nhỏ của riêng mình.</p>
+      <p class="tagline">Nơi mình thỏa niềm đam mê văn chương, viết về những cuốn sách đã đọc và gửi gắm những thông điệp sống.</p>
     </div>
   </header>
 
@@ -394,7 +394,6 @@
       <li><a href="#goc-sach">Góc sách</a></li>
       <li><a href="#thong-diep">Thông điệp</a></li>
       <li><a href="#chuyen-nho">Chuyện nhỏ</a></li>
-      <li><a href="#lotteria">Lotteria</a></li>
     </ul>
   </nav>
 
@@ -469,49 +468,16 @@
       </div>
     </section>
 
-    <!-- ================= LOTTERIA ================= -->
-    <section id="lotteria">
-      <p class="eyebrow">Hành trình làm việc</p>
-      <h2>Những ngày ở Lotteria</h2>
-      <p class="lead">Không phải hồ sơ công việc, chỉ là vài dòng cảm nghĩ về một chặng đường.</p>
-
-      <div class="card">
-        <p style="margin-top:0">Viết cảm nghĩ về quãng thời gian làm ở Lotteria: điều gì khiến mình gắn bó, những con người mình gặp, bài học mình nhận được, khoảnh khắc đáng nhớ nhất...</p>
-
-        <h3 style="margin-top:28px">Những việc mình đã làm</h3>
-        <ul class="timeline">
-          <!-- ▼ MẪU 1 MỐC: copy khối <li>...</li> để thêm ▼ -->
-          <li>
-            <strong>Phát triển cửa hàng mới</strong>
-            Tìm kiếm, đánh giá mặt bằng và đồng hành cùng các cửa hàng từ lúc còn trên giấy đến ngày khai trương.
-          </li>
-          <!-- ▲ HẾT MẪU ▲ -->
-          <li>
-            <strong>Hợp đồng thuê mặt bằng</strong>
-            Đọc, góp ý và thương lượng hợp đồng với các trung tâm thương mại, nơi tấm bằng luật được dùng mỗi ngày.
-          </li>
-          <li>
-            <strong>Nhượng quyền thương hiệu</strong>
-            Tư vấn và trò chuyện với những người muốn cùng Lotteria mở cửa hàng của riêng họ.
-          </li>
-        </ul>
-      </div>
-    </section>
 
   </main>
 
   <!-- ================= CHÂN TRANG ================= -->
   <footer>
     <p>Viết bằng cả tấm lòng · Ruby · 2026<br>Ảnh bìa sách thuộc về các nhà xuất bản</p>
-    <svg viewBox="0 0 1440 140" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-      <path style="fill: var(--forest-far)" d="M0 70 C240 30 480 60 720 50 C960 40 1200 22 1440 60 L1440 140 L0 140 Z"/>
-      <path style="fill: var(--grass)" d="M0 100 C300 70 600 110 900 90 C1140 75 1300 95 1440 85 L1440 140 L0 140 Z"/>
-      <path style="fill: var(--trunk)" d="M1096 84 L1100 62 L1106 62 L1109 84 Z"/>
-      <circle cx="1094" cy="58" r="14" style="fill: var(--tree)"/>
-      <circle cx="1112" cy="56" r="13" style="fill: var(--tree)"/>
-      <circle cx="1103" cy="44" r="13" style="fill: var(--tree-light)"/>
-      <path style="fill: var(--grass-front)" d="M0 125 C400 105 800 135 1440 115 L1440 140 L0 140 Z"/>
-    </svg>
+    <div class="meadow">
+      <img src="images/dong-hoa.jpg" alt="">
+      <canvas class="wind" data-src="images/dong-hoa.jpg" data-crop="0.6,1" data-focus="0.5,1" aria-hidden="true"></canvas>
+    </div>
   </footer>
 
   <!-- ================= SÁCH MỞ (cửa sổ khi bấm vào một cuốn) ================= -->
@@ -560,6 +526,8 @@
         blurb: "Những câu chuyện tiền kiếp của ông Thomas, một doanh nhân ở New York, xoay quanh luật nhân quả và luân hồi.", thoughts: [] },
       { shelf: "ngoai", title: "Tiếng chim hót trong bụi mận gai", author: "Colleen McCullough", color: "#5b6e3a", ink: "#f1e4c4", motif: "thornbird", cover: "images/bia/tieng-chim-hot.jpg",
         blurb: "Ba thế hệ nhà Cleary trên vùng đất Úc khắc nghiệt, và mối tình day dứt giữa Meggie và cha Ralph.", thoughts: [] },
+      { shelf: "ngoai", title: "Yêu những điều không hoàn hảo", author: "Hae Min", color: "#7fb3c8", ink: "#1f3a2a", motif: "rings", cover: "images/bia/yeu-nhung-dieu-khong-hoan-hao.jpg",
+        blurb: "Những lời nhắn nhủ dịu dàng của thầy Hae Min về cách chấp nhận chính mình, bao dung với người khác và tìm thấy bình yên giữa những điều chưa trọn vẹn.", thoughts: [] },
 
       { shelf: "vn", title: "Tủ sách Nguyễn Nhật Ánh", author: "Nguyễn Nhật Ánh", color: "#e9d36a", ink: "#45521f", motif: "flower", cover: "images/bia/nguyen-nhat-anh.jpg",
         blurb: "Những trang văn trong trẻo về tuổi thơ, tuổi học trò và những ký ức làng quê.", thoughts: [] },
@@ -644,6 +612,116 @@
     reader.addEventListener("cancel", e => { e.preventDefault(); closeBook(); });
     reader.addEventListener("click", e => { if (e.target === reader) closeBook(); });
 
+
+    /* ===== Hoa đung đưa theo gió =====
+       Ảnh đồng hoa được vẽ lại liên tục bằng WebGL: phần cánh đồng (nửa dưới ảnh) và tán cây
+       bên phải lay động theo từng đợt gió; bầu trời, núi, hồ đứng yên. */
+    (function () {
+      if (reduced()) return;
+      const VS = "attribute vec2 p;varying vec2 v;void main(){v=vec2(p.x*.5+.5,.5-p.y*.5);gl_Position=vec4(p,0.,1.);}";
+      const FS = [
+        "precision mediump float;varying vec2 v;uniform sampler2D img;uniform float t;uniform vec2 sc,off;",
+        "void main(){",
+        " vec2 uv=v*sc+off;",
+        " float field=smoothstep(.58,.74,uv.y);",
+        " float tree=smoothstep(.84,.92,uv.x)*smoothstep(.15,.25,uv.y)*(1.-smoothstep(.47,.56,uv.y));",
+        " float gust=.6+.4*sin(t*.45+uv.x*2.2);",
+        " float ph=uv.x*7.-t*1.6+uv.y*3.;",
+        " float sway=sin(ph)*.75+sin(uv.x*19.-t*2.6+uv.y*9.)*.25;",
+        " float amp=(field*mix(.0015,.0065,smoothstep(.62,1.,uv.y))+tree*.0022)*gust;",
+        " uv+=vec2(sway*amp,cos(ph*1.3)*amp*.2);",
+        " vec4 c=texture2D(img,uv);",
+        " c.rgb*=1.+.035*field*sin(ph)*gust;",
+        " gl_FragColor=c;",
+        "}"].join("\n");
+
+      function wind(cv) {
+        const gl = cv.getContext("webgl", { alpha: false, antialias: false });
+        if (!gl) return;
+        const img = new Image();
+        img.onload = () => {
+          const prog = gl.createProgram();
+          [[gl.VERTEX_SHADER, VS], [gl.FRAGMENT_SHADER, FS]].forEach(([type, src]) => {
+            const sh = gl.createShader(type); gl.shaderSource(sh, src); gl.compileShader(sh); gl.attachShader(prog, sh);
+          });
+          gl.linkProgram(prog);
+          if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+          gl.useProgram(prog);
+          gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+          const loc = gl.getAttribLocation(prog, "p");
+          gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+          gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
+          try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img); } catch (e) { return; }
+          [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]]
+            .forEach(([k, val]) => gl.texParameteri(gl.TEXTURE_2D, k, val));
+          const uT = gl.getUniformLocation(prog, "t"), uSc = gl.getUniformLocation(prog, "sc"), uOff = gl.getUniformLocation(prog, "off");
+          const [y0, y1] = cv.dataset.crop.split(",").map(Number), [fx, fy] = cv.dataset.focus.split(",").map(Number);
+          let visible = true, raf = 0;
+          function fit() {
+            const d = Math.min(devicePixelRatio || 1, 2), w = Math.round(cv.clientWidth * d), h = Math.round(cv.clientHeight * d);
+            if (!w || !h) return false;
+            if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+            gl.viewport(0, 0, w, h);
+            const ca = w / h, ra = img.width / (img.height * (y1 - y0));
+            let sx = 1, sy = 1, ox = 0, oy = 0;
+            if (ca > ra) { sy = ra / ca; oy = (1 - sy) * fy; } else { sx = ca / ra; ox = (1 - sx) * fx; }
+            gl.uniform2f(uSc, sx, sy * (y1 - y0)); gl.uniform2f(uOff, ox, y0 + oy * (y1 - y0));
+            return true;
+          }
+          function frame(ms) {
+            raf = 0;
+            if (!visible || document.hidden || !fit()) return;
+            gl.uniform1f(uT, ms / 1000);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            cv.classList.add("ready");
+            loop();
+          }
+          function loop() { if (!raf) raf = requestAnimationFrame(frame); }
+          new IntersectionObserver(e => { visible = e[0].isIntersecting; loop(); }).observe(cv);
+          document.addEventListener("visibilitychange", loop);
+          loop();
+        };
+        img.src = cv.dataset.src;
+      }
+      document.querySelectorAll("canvas.wind").forEach(wind);
+
+      /* cánh hoa nhỏ bay theo gió ở đầu trang */
+      const pc = document.querySelector("canvas.petals"), ctx = pc && pc.getContext("2d");
+      if (!ctx) return;
+      const COLORS = ["#ffffff", "#ffd6e5", "#ffe9a8", "#f7b8d2", "#e9dcff"];
+      const petals = Array.from({ length: 22 }, () => ({
+        x: Math.random(), y: .3 + Math.random() * .65, s: 2.5 + Math.random() * 4, r: Math.random() * 6.3,
+        vr: (Math.random() - .5) * 2, sp: .025 + Math.random() * .035, ph: Math.random() * 6.3,
+        c: COLORS[Math.floor(Math.random() * COLORS.length)]
+      }));
+      let last = 0, show = true, praf = 0;
+      function draw(ms) {
+        praf = 0;
+        if (!show || document.hidden) return;
+        const dt = Math.min(.05, (ms - (last || ms)) / 1000); last = ms;
+        const d = Math.min(devicePixelRatio || 1, 2), w = Math.round(pc.clientWidth * d), h = Math.round(pc.clientHeight * d);
+        if (pc.width !== w || pc.height !== h) { pc.width = w; pc.height = h; }
+        ctx.clearRect(0, 0, w, h);
+        const t = ms / 1000;
+        for (const p of petals) {
+          const gust = .6 + .4 * Math.sin(t * .45 + p.x * 2.2);
+          p.x += p.sp * gust * dt; p.y += Math.sin(t * 1.3 + p.ph) * .012 * dt + .004 * dt; p.r += p.vr * dt;
+          if (p.x > 1.05) { p.x = -.05; p.y = .3 + Math.random() * .65; }
+          if (p.y > 1) p.y = .3;
+          ctx.save();
+          ctx.translate(p.x * w, p.y * h); ctx.rotate(p.r);
+          ctx.globalAlpha = .85; ctx.fillStyle = p.c;
+          ctx.beginPath(); ctx.ellipse(0, 0, p.s * d, p.s * d * .55, 0, 0, 6.283); ctx.fill();
+          ctx.restore();
+        }
+        ploop();
+      }
+      function ploop() { if (!praf) praf = requestAnimationFrame(draw); }
+      new IntersectionObserver(e => { show = e[0].isIntersecting; last = 0; ploop(); }).observe(pc);
+      document.addEventListener("visibilitychange", () => { last = 0; ploop(); });
+      ploop();
+    })();
   </script>
 
 </body>
