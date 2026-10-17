@@ -427,6 +427,35 @@
       .gbox.shake, .twinkle, .gift-sparks.go i { animation: none; }
     }
 
+    /* ---------- Nút nhạc nền ---------- */
+    .music-btn {
+      position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 20;
+      width: 50px; height: 50px; border-radius: 50%; cursor: pointer;
+      display: grid; place-items: center; padding: 0;
+      border: 1px solid var(--line); background: var(--card); color: var(--accent);
+      box-shadow: 0 10px 24px -10px rgba(0, 0, 0, .4);
+      transition: transform .25s ease;
+    }
+    .music-btn:hover { transform: scale(1.07); }
+    .music-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .music-btn .note { font-size: 24px; line-height: 1; margin-top: -2px; }
+    .music-btn .eq { display: none; gap: 3px; align-items: flex-end; height: 18px; }
+    .music-btn .eq i { width: 3px; height: 6px; border-radius: 2px; background: var(--accent); animation: eq .8s ease-in-out infinite alternate; }
+    .music-btn .eq i:nth-child(2) { animation-delay: -.3s; animation-duration: .65s; }
+    .music-btn .eq i:nth-child(3) { animation-delay: -.55s; animation-duration: .95s; }
+    @keyframes eq { from { height: 4px; } to { height: 18px; } }
+    .music-btn.on .note { display: none; }
+    .music-btn.on .eq { display: flex; }
+    .music-tip {
+      position: absolute; right: 60px; top: 50%; white-space: nowrap;
+      font-family: var(--sans); font-size: 13px; color: var(--ink);
+      background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px;
+      box-shadow: 0 8px 18px -10px rgba(0, 0, 0, .35);
+      opacity: 0; transform: translate(6px, -50%); transition: opacity .3s ease, transform .3s ease; pointer-events: none;
+    }
+    .music-btn:hover .music-tip, .music-btn:focus-visible .music-tip, .music-btn.hint .music-tip { opacity: 1; transform: translate(0, -50%); }
+    @media (prefers-reduced-motion: reduce) { .music-btn .eq i { animation: none; height: 12px; } }
+
     /* ---------- Chân trang ---------- */
     footer { text-align: center; color: var(--muted); font-family: var(--sans); font-size: 14px; padding-top: 72px; }
     footer p { margin: 0 0 16px; padding: 0 16px; }
@@ -558,6 +587,15 @@
       <canvas class="wind" data-src="images/dong-hoa.jpg" data-crop="0.6,1" data-focus="0.5,1" aria-hidden="true"></canvas>
     </div>
   </footer>
+
+  <!-- ================= NHẠC NỀN =================
+       Nhạc: Pixabay Music (Pixabay Content License) · "Summer Suburbia" & "Cicada Dreams" – ChilltapeFM -->
+  <button class="music-btn" id="musicBtn" type="button" aria-pressed="false" aria-label="Bật nhạc nền">
+    <span class="note" aria-hidden="true">♪</span>
+    <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="music-tip" id="musicTip">Bật nhạc</span>
+  </button>
+  <audio id="bgm" preload="none"></audio>
 
   <!-- ================= SÁCH MỞ (cửa sổ khi bấm vào một cuốn) ================= -->
   <dialog class="reader" id="reader" aria-label="Sách đang mở">
@@ -691,6 +729,59 @@
     reader.addEventListener("cancel", e => { e.preventDefault(); closeBook(); });
     reader.addEventListener("click", e => { if (e.target === reader) closeBook(); });
 
+
+    /* ===== Nhạc nền: bấm nút ♪ để bật/tắt; hai bản phát nối nhau, lặp lại ===== */
+    (function () {
+      const TRACKS = [
+        { src: "music/mua-he-ngoai-o.mp3", name: "Mùa hè ngoại ô" },
+        { src: "music/giac-mo-ve-sau.mp3", name: "Giấc mơ ve sầu" },
+      ];
+      const VOLUME = 0.35;
+      const btn = document.getElementById("musicBtn"), tip = document.getElementById("musicTip"), bgm = document.getElementById("bgm");
+      let ti = 0, on = false, fade = 0;
+      const load = i => { ti = i % TRACKS.length; bgm.src = TRACKS[ti].src; };
+      const save = () => { try { localStorage.setItem("ruby-music", on ? "on" : "off"); } catch (e) {} };
+      function ui() {
+        btn.classList.toggle("on", on);
+        btn.setAttribute("aria-pressed", on);
+        btn.setAttribute("aria-label", on ? "Tắt nhạc nền" : "Bật nhạc nền");
+        tip.textContent = on ? "♪ " + TRACKS[ti].name + " · bấm để tắt" : "Bật nhạc";
+      }
+      function fadeTo(v, ms, done) {
+        clearInterval(fade);
+        const from = bgm.volume, t0 = performance.now();
+        fade = setInterval(() => {
+          const k = Math.min(1, (performance.now() - t0) / ms);
+          bgm.volume = from + (v - from) * k;
+          if (k >= 1) { clearInterval(fade); if (done) done(); }
+        }, 50);
+      }
+      function play() {
+        if (!bgm.src) load(0);
+        bgm.volume = 0;
+        const pr = bgm.play();
+        on = true; ui(); save(); fadeTo(VOLUME, 1500);
+        if (pr) pr.catch(() => { on = false; ui(); });
+      }
+      function stop() { on = false; ui(); save(); fadeTo(0, 600, () => bgm.pause()); }
+      bgm.addEventListener("ended", () => { load(ti + 1); ui(); bgm.play(); });
+      btn.addEventListener("click", () => { btn.classList.remove("hint"); on ? stop() : play(); });
+
+      // Lần trước người xem đã bật nhạc: phát lại ngay khi họ chạm vào trang lần đầu
+      let pref = null;
+      try { pref = localStorage.getItem("ruby-music"); } catch (e) {}
+      if (pref === "on") {
+        const resume = e => {
+          document.removeEventListener("pointerdown", resume, true);
+          document.removeEventListener("keydown", resume, true);
+          if (!e.target.closest || !e.target.closest("#musicBtn")) play();
+        };
+        document.addEventListener("pointerdown", resume, true);
+        document.addEventListener("keydown", resume, true);
+      } else if (pref === null) {
+        setTimeout(() => { btn.classList.add("hint"); setTimeout(() => btn.classList.remove("hint"), 4000); }, 1500);
+      }
+    })();
 
     /* ===== Hộp quà thông điệp ===== */
     (function () {
