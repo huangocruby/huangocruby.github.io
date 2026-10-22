@@ -198,6 +198,15 @@
     details[open] summary::after { content: " ↑"; }
     details[open] summary { margin-bottom: 8px; }
 
+    /* Trích dẫn trong bài viết */
+    .card blockquote {
+      margin: 16px 0; padding: 4px 0 4px 18px;
+      border-left: 3px solid var(--accent);
+      font-style: italic; color: var(--muted);
+    }
+    .card blockquote p { margin: 0 0 10px; }
+    .card blockquote p:last-child { margin-bottom: 0; }
+
     /* ---------- Góc sách: kệ sách ---------- */
     .shelf-hint { font-family: var(--sans); font-size: 14px; color: var(--muted); margin: -16px 0 8px; }
     .shelf-title { font-size: 24px; margin: 40px 0 8px; }
@@ -556,22 +565,35 @@
       <p class="lead">Những mẩu chuyện thường ngày và vài dòng suy nghĩ vụn vặt.</p>
 
       <div class="stack">
-        <!-- ▼ MẪU 1 BÀI VIẾT: copy từ dòng này đến "HẾT MẪU" để thêm bài mới (bài mới đặt lên trên cùng) ▼ -->
-        <article class="card">
-          <p class="meta">14 tháng 10, 2026</p>
-          <h3>Tiêu đề câu chuyện</h3>
-          <p>Một đoạn mở đầu ngắn, đủ để người đọc muốn bấm "Đọc tiếp".</p>
-          <details>
-            <summary>Đọc tiếp</summary>
-            <p>Phần còn lại của câu chuyện. Viết thoải mái nhiều đoạn, mỗi đoạn một cặp thẻ &lt;p&gt;...&lt;/p&gt;.</p>
-          </details>
-        </article>
-        <!-- ▲ HẾT MẪU ▲ -->
-
+        <!-- MẪU 1 BÀI VIẾT (bài mới đặt lên trên cùng):
         <article class="card">
           <p class="meta">Ngày tháng</p>
-          <h3>Một buổi chiều đọc sách</h3>
-          <p>Ví dụ một cảm nghĩ ngắn, không cần nút "Đọc tiếp" nếu bài chỉ vài dòng.</p>
+          <h3>Tiêu đề câu chuyện</h3>
+          <p>Đoạn mở đầu ngắn.</p>
+          <details>
+            <summary>Đọc tiếp</summary>
+            <p>Phần còn lại, mỗi đoạn một cặp thẻ p.</p>
+          </details>
+        </article>
+        HẾT MẪU -->
+
+        <article class="card">
+          <p class="meta">22 tháng 10, 2026</p>
+          <h3>Chỉ cần được lắng nghe</h3>
+          <blockquote><p>“Chẳng phải vẫn hay có chuyện rằng chỉ cần được nghe thôi cũng cảm thấy biết ơn sao?”</p></blockquote>
+          <p>Mình của ngày trước hay lo nghĩ hay suy nghĩ vấn đề gấp mười lần cái nó sẽ xảy ra. Có khi đó là tính cách từ sâu bên trong mình mà khó có thể thoát ra được. Lo lắng thường xuyên, hay nặng lòng và nhiều tâm sự. Ngày ấy mình hay than thở hay cần người lắng nghe. Với mình, một vấn đề được kể ra chỉ để tâm sự cho bạn bè biết rằng mình đang như thế mà thật sự mình không cần lời khuyên. Mình chỉ cần được nghe và lắng nghe. Khi ấy mình thấy nhẹ lòng lắm, khi kể ra mình cũng có được đáp án của bản thân.</p>
+          <details>
+            <summary>Đọc tiếp</summary>
+            <p>Sau này, mình thoải mái hơn trong suy nghĩ, mình sống cho hiện tại và bớt lo nghĩ hơn, nhìn nhận sự việc cũng đơn giản hơn mình không còn rơi vào trạng thái như vậy nữa.</p>
+            <p>Nhưng một vài người bạn mình có rơi vào trạng thái ấy, mình sẵn sàng lắng nghe, có thể mình không biết sẽ khuyên như thế nào hay tìm cách ra làm sao nhưng mình nhìn được mình của ngày xưa, mình nghĩ nếu mình chăm chú lắng nghe bạn mình kể thì đó cũng giúp một phần bạn mình chữa lành tâm hồn của họ.</p>
+            <p>Trong cuốn sách “Điều kỳ diệu của tiệm tạp hóa Namiya” lúc Kohei tranh luận với Atsuya khi Atsuya không muốn viết thư trả lời cho cô gái có những rối ren trong chuyện tình cảm và sự nghiệp có đoạn như sau:</p>
+            <blockquote>
+              <p>“Nhưng mà chỉ cần mình viết gì đó thôi, tao nghĩ sẽ khác lắm. Chẳng phải vẫn hay có chuyện rằng chỉ cần được nghe thôi cũng thấy biết ơn sao?”</p>
+              <p>“Người này đang rất đau khổ vì không thể tâm sự với ai. Dù không đưa ra được lời khuyên gì to tát nhưng nếu mình trả lời rằng tôi rất hiểu phiền muộn của cô, hãy cố gắng lên thì chắc cô ấy sẽ cảm thấy nhẹ nhõm được đôi chút.”</p>
+              <p>“Nghĩa là bình thường chúng ta có bao giờ lắng nghe phiền muộn của ai đâu. Chẳng ai có ý định nhờ bọn mình tư vấn cả. Có lẽ cả đời này sẽ không có ai. Đây là lần đầu tiên cũng là lần cuối cùng. Làm một lần có sao đâu nào.”</p>
+            </blockquote>
+            <p>Đọc đến đoạn này làm mình nhìn thấy được mình của ngày xưa và hiện tại. Biết ơn những gì đã trải qua để cho bản thân có những nhìn nhận được sâu sắc hơn (ít nhất đối với bản thân mình).</p>
+          </details>
         </article>
       </div>
     </section>
