@@ -8,6 +8,26 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+  <!-- Đếm lượt xem (Umami). Mở trang với #khong-dem để máy này không bị đếm, #dem-lai để đếm lại. -->
+  <script>
+    (function () {
+      var h = location.hash, msg = "";
+      try {
+        if (h === "#khong-dem") { localStorage.setItem("umami.disabled", "1"); msg = "Đã tắt đếm lượt xem trên máy này 🌼"; }
+        if (h === "#dem-lai") { localStorage.removeItem("umami.disabled"); msg = "Máy này sẽ được đếm lượt xem trở lại"; }
+      } catch (e) {}
+      if (!msg) return;
+      document.addEventListener("DOMContentLoaded", function () {
+        var t = document.createElement("div");
+        t.textContent = msg;
+        t.style.cssText = "position:fixed;left:50%;top:20px;transform:translateX(-50%);z-index:50;padding:10px 18px;border-radius:999px;" +
+          "background:var(--card);color:var(--ink);border:1px solid var(--line);font:14px var(--sans);box-shadow:0 10px 24px -10px rgba(0,0,0,.4)";
+        document.body.appendChild(t);
+        setTimeout(function () { t.remove(); history.replaceState(null, "", location.pathname); }, 4000);
+      });
+    })();
+  </script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="8e580c7d-9f42-4d81-badd-3106e9416291"></script>
   <style>
     /* Bố cục: tranh đồng quê ở đầu trang, nội dung một cột như trang sách, kệ sách gỗ ở Góc sách. */
     /* ===== BẢNG MÀU (ban ngày) ===== */
